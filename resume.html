@@ -1,493 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Arena — Professional Resume Builder</title>
-    <meta name="description" content="Create professional, eye-catching resumes. Free templates, instant preview, and easy download options.">
-    <meta name="keywords" content="resume builder, cv maker, professional resume, resume templates">
-    <link rel="canonical" href="https://yourdomain.com/">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Arena — Professional Resume Builder</title>
+  <meta name="description" content="Create professional, eye-catching resumes. Free templates, instant preview, and easy download options.">
+  <meta name="keywords" content="resume builder, cv maker, professional resume, resume templates">
+  <link rel="canonical" href="https://yourdomain.com/">
 
-    <!-- jsPDF Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
-    <style>
-        :root {
-            --bg-1: #050014;
-            --bg-2: #17002b;
-            --neon: #a020f0;
-            --accent: #39ffd9;
-            --card: #0f0b19;
-            --muted: #b6b6d6;
-        }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        
-        html, body {
-            height: 100%;
-            font-family: Inter, system-ui, Poppins, Arial, sans-serif;
-            background: radial-gradient(800px 400px at 10% 10%, rgba(160, 32, 240, 0.08), transparent 10%),
-                        linear-gradient(180deg, var(--bg-1), var(--bg-2));
-            color: #eaeaf6;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header Styles */
-        header {
-            text-align: center;
-            padding: 30px 0;
-        }
-        
-        .logo {
-            font-family: Orbitron, sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 10px;
-        }
-        
-        .tagline {
-            color: var(--muted);
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-        
-        /* Main Content */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin: 30px 0;
-        }
-        
-        @media (max-width: 900px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* Form Styles */
-        .form-section {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 12px;
-            padding: 25px;
-        }
-        
-        .form-title {
-            font-family: Poppins, sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: white;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-        
-        input, textarea, select {
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            font-family: inherit;
-            font-size: 1rem;
-        }
-        
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        /* Preview Styles */
-        .preview-section {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 12px;
-            padding: 25px;
-        }
-        
-        .resume-preview {
-            background: linear-gradient(180deg, #0b0713 0%, #10071a 100%);
-            border-radius: 8px;
-            padding: 25px;
-            color: #e6e6ff;
-            min-height: 500px;
-        }
-        
-        .resume-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .resume-name {
-            font-family: Orbitron, sans-serif;
-            font-size: 1.8rem;
-            color: var(--neon);
-        }
-        
-        .resume-title {
-            color: var(--muted);
-            margin-top: 5px;
-        }
-        
-        .resume-section {
-            margin-bottom: 20px;
-        }
-        
-        .section-title {
-            font-size: 1.2rem;
-            color: white;
-            margin-bottom: 10px;
-        }
-        
-        /* Button Styles */
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            font-family: inherit;
-            font-size: 1rem;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(90deg, var(--neon), #7a00ff);
-            color: white;
-            box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
-        }
-        
-        .btn-download {
-            background: linear-gradient(90deg, var(--accent), #00ccaa);
-            color: #050014;
-            margin-top: 20px;
-            width: 100%;
-        }
-        
-        /* Ad Placeholders */
-        .ad-container {
-            margin: 30px 0;
-            text-align: center;
-        }
-        
-        .ad-label {
-            font-size: 0.8rem;
-            color: var(--muted);
-            margin-bottom: 8px;
-        }
-        
-        .ad-placeholder {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-            border: 1px dashed rgba(160, 32, 240, 0.3);
-            border-radius: 8px;
-            padding: 20px;
-            color: var(--muted);
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            color: var(--muted);
-            font-size: 0.9rem;
-            margin-top: 50px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        /* Responsive Adjustments */
-        @media (max-width: 600px) {
-            .container {
-                padding: 0 15px;
-            }
-            
-            .form-section, .preview-section {
-                padding: 20px;
-            }
-            
-            .resume-preview {
-                padding: 20px;
-            }
-            
-            .resume-header {
-                flex-direction: column;
-            }
-        }
-    </style>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- jsPDF Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root {
+      --bg-1: #050014;
+      --bg-2: #17002b;
+      --neon: #a020f0;
+      --accent: #39ffd9;
+      --card: #0f0b19;
+      --muted: #b6b6d6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      font-family: Inter, system-ui, Poppins, Arial, sans-serif;
+      background: radial-gradient(800px 400px at 10% 10%, rgba(160, 32, 240, 0.08), transparent 10%),
+                  linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      color: #eaeaf6;
+      line-height: 1.6;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    header { text-align: center; padding: 30px 0; }
+    .logo { font-family: Orbitron, sans-serif; font-size: 2.5rem; font-weight: 700; color: var(--accent); margin-bottom: 10px; }
+    .tagline { color: var(--muted); font-size: 1.1rem; margin-bottom: 20px; }
+    .main-content { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0; }
+    @media (max-width: 900px) { .main-content { grid-template-columns: 1fr; } }
+    .form-section, .preview-section {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 12px;
+      padding: 25px;
+    }
+    .form-title { font-family: Poppins, sans-serif; font-size: 1.5rem; margin-bottom: 20px; color: white; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 0.9rem; }
+    input, textarea, select {
+      width: 100%; padding: 12px 15px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05); color: white;
+      font-family: inherit; font-size: 1rem;
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    .resume-preview {
+      background: linear-gradient(180deg, #0b0713 0%, #10071a 100%);
+      border-radius: 8px; padding: 25px; color: #e6e6ff; min-height: 500px;
+    }
+    .resume-header { display: flex; justify-content: space-between; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .resume-name { font-family: Orbitron, sans-serif; font-size: 1.8rem; color: var(--neon); }
+    .resume-title { color: var(--muted); margin-top: 5px; }
+    .resume-section { margin-bottom: 20px; }
+    .section-title { font-size: 1.2rem; color: white; margin-bottom: 10px; }
+    .btn { display: inline-block; padding: 12px 25px; border-radius: 8px; font-weight: 600; text-align: center; cursor: pointer; transition: all 0.3s ease; border: none; font-family: inherit; font-size: 1rem; }
+    .btn-primary { background: linear-gradient(90deg, var(--neon), #7a00ff); color: white; box-shadow: 0 4px 15px rgba(160,32,240,0.3); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(160,32,240,0.4); }
+    .btn-download { background: linear-gradient(90deg, var(--accent), #00ccaa); color: #050014; margin-top: 20px; width: 100%; }
+    .ad-container { margin: 30px 0; text-align: center; }
+    .ad-label { font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; }
+    footer { text-align: center; padding: 30px 0; color: var(--muted); font-size: 0.9rem; margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.05); }
+    @media (max-width: 600px) { .resume-header { flex-direction: column; } }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">RESUME ARENA</div>
-            <div class="tagline">Create professional resumes</div>
-        </header>
-        
-       <!-- Top Ad Container -->
-       <div class="ad-container">
-          <div class="ad-label">Advertisement</div>
-          <div class="ad-placeholder">
-            <!-- Google AdSense Code -->
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264"
-              crossorigin="anonymous"></script>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-6104943961690264"
-                 data-ad-slot="1291978205"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-              (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-          </div>
-        </div>
+  <div class="container">
+    <header>
+      <div class="logo">RESUME ARENA</div>
+      <div class="tagline">Create professional resumes</div>
+    </header>
 
-        <div class="main-content">
-            <div class="form-section">
-                <h2 class="form-title">Build Your Resume</h2>
-                
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" placeholder="Your Name" value="Alex Johnson">
-                </div>
-                
-                <div class="form-group">
-                    <label for="jobTitle">Job Title</label>
-                    <input type="text" id="jobTitle" placeholder="Professional Title" value="Frontend Developer">
-                </div>
-                
-                <div class="form-group">
-                    <label for="contactInfo">Contact Information</label>
-                    <input type="text" id="contactInfo" placeholder="Email | Phone | Website" value="alex@example.com | (123) 456-7890 | alexjohnson.dev">
-                </div>
-                
-                <div class="form-group">
-                    <label for="summary">Professional Summary</label>
-                    <textarea id="summary">Experienced frontend developer with 5+ years building responsive web applications. Specialized in React, Vue.js, and modern CSS frameworks. Passionate about creating intuitive user experiences with clean, efficient code.</textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label for="experience">Work Experience</label>
-                    <textarea id="experience">Senior Frontend Developer at TechCorp (2020-Present)
-- Led development of customer portal with React and Node.js
-- Improved page load performance by 40% through code optimization
-- Implemented accessibility features reaching WCAG 2.1 AA compliance
-
-Frontend Developer at WebSolutions Inc (2017-2020)
-- Developed responsive websites for clients across various industries
-- Collaborated with UX designers to implement user-friendly interfaces
-- Created component library reducing development time by 25%</textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label for="skills">Skills</label>
-                    <textarea id="skills">JavaScript (ES6+)
-React & Redux
-HTML5 & CSS3
-Responsive Design
-Web Accessibility
-Performance Optimization
-Git & GitHub
-UI/UX Design Principles</textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label for="education">Education</label>
-                    <textarea id="education">B.Sc. Computer Science - Tech University (2016)
-Frontend Web Development Nanodegree - Online Institute (2018)</textarea>
-                </div>
-                
-                <button class="btn btn-primary" onclick="updatePreview()">Update Preview</button>
-                <button class="btn btn-download" onclick="downloadResume()">Download Resume</button>
-            </div>
-            
-            <div class="preview-section">
-                <h2 class="form-title">Resume Preview</h2>
-                <div class="resume-preview" id="resumePreview">
-                    <!-- Preview Content Will Render Here -->
-                </div>
-            </div>
-        </div>
-        
-       <!-- Middle Ad Container -->
-       <div class="ad-container">
-          <div class="ad-label">Advertisement</div>
-          <div class="ad-placeholder">
-            <!-- Google AdSense Code -->
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264"
-              crossorigin="anonymous"></script>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-6104943961690264"
-                 data-ad-slot="9658958352"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-              (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-          </div>
-        </div>
-
-        <!-- Features Section -->
-        <div style="margin: 50px 0; text-align: center;">
-            <h2 style="margin-bottom: 30px; color: white;">Why Choose Resume Arena?</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                <div style="padding: 20px; background: rgba(255, 255, 255, 0.03); border-radius: 10px;">
-                    <h3 style="color: var(--accent); margin-bottom: 15px;">Professional Templates</h3>
-                    <p style="color: var(--muted);">Choose from multiple ATS-friendly templates designed to get you noticed.</p>
-                </div>
-                <div style="padding: 20px; background: rgba(255, 255, 255, 0.03); border-radius: 10px;">
-                    <h3 style="color: var(--accent); margin-bottom: 15px;">Instant Preview</h3>
-                    <p style="color: var(--muted);">See your changes in real-time with our live preview feature.</p>
-                </div>
-                <div style="padding: 20px; background: rgba(255, 255, 255, 0.03); border-radius: 10px;">
-                    <h3 style="color: var(--accent); margin-bottom: 15px;">Easy Download</h3>
-                    <p style="color: var(--muted);">Download your resume as a PDF or HTML file with one click.</p>
-                </div>
-            </div>
-        </div>
-        
-       <!-- Bottom Ad Container -->
-       <div class="ad-container">
-          <div class="ad-label">Advertisement</div>
-          <div class="ad-placeholder">
-            <!-- Google AdSense Code -->
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264"
-              crossorigin="anonymous"></script>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-6104943961690264"
-                 data-ad-slot="6987744742"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-              (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-          </div>
-        </div>
-
-        <footer>
-            <p>&copy; 2023 Resume Arena. All rights reserved.</p>
-        </footer>
+    <!-- Top Ad -->
+    <div class="ad-container">
+      <div class="ad-label">Advertisement</div>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6104943961690264" data-ad-slot="1291978205" data-ad-format="auto" data-full-width-responsive="true"></ins>
     </div>
 
-    <script>
-        function updatePreview() {
-            const name = document.getElementById('fullName').value || 'Your Name';
-            const title = document.getElementById('jobTitle').value || 'Professional Title';
-            const contact = document.getElementById('contactInfo').value || 'Email | Phone | Website';
-            const summary = document.getElementById('summary').value || 'Professional summary will appear here.';
-            const experience = document.getElementById('experience').value || 'Work experience will appear here.';
-            const skills = document.getElementById('skills').value || 'Skills will appear here.';
-            const education = document.getElementById('education').value || 'Education will appear here.';
+    <div class="main-content">
+      <div class="form-section">
+        <h2 class="form-title">Build Your Resume</h2>
+        <div class="form-group"><label for="fullName">Full Name</label><input type="text" id="fullName" value="Alex Johnson"></div>
+        <div class="form-group"><label for="jobTitle">Job Title</label><input type="text" id="jobTitle" value="Frontend Developer"></div>
+        <div class="form-group"><label for="contactInfo">Contact Information</label><input type="text" id="contactInfo" value="alex@example.com | (123) 456-7890 | alexjohnson.dev"></div>
+        <div class="form-group"><label for="summary">Professional Summary</label><textarea id="summary">Experienced frontend developer with 5+ years building responsive web applications.</textarea></div>
+        <div class="form-group"><label for="experience">Work Experience</label><textarea id="experience">Senior Frontend Developer at TechCorp (2020-Present)</textarea></div>
+        <div class="form-group"><label for="skills">Skills</label><textarea id="skills">JavaScript, React, CSS</textarea></div>
+        <div class="form-group"><label for="education">Education</label><textarea id="education">B.Sc. Computer Science - Tech University (2016)</textarea></div>
+        <button class="btn btn-primary" onclick="updatePreview()">Update Preview</button>
+        <button class="btn btn-download" onclick="downloadResume()">Download Resume</button>
+      </div>
 
-            // Format experience
-            let formattedExperience = '';
-            if (experience) {
-                const entries = experience.split('\n\n');
-                formattedExperience = entries.map(entry => {
-                    const lines = entry.split('\n');
-                    let html = `<p><strong>${lines[0]}</strong></p>`;
-                    if (lines.length > 1) {
-                        html += '<ul>';
-                        for (let i = 1; i < lines.length; i++) {
-                            if (lines[i].trim()) {
-                                html += `<li>${lines[i].replace(/^- /, '')}</li>`;
-                            }
-                        }
-                        html += '</ul>';
-                    }
-                    return html;
-                }).join('');
-            }
+      <div class="preview-section">
+        <h2 class="form-title">Resume Preview</h2>
+        <div class="resume-preview" id="resumePreview"></div>
+      </div>
+    </div>
 
-            // Format skills
-            const formattedSkills = skills ? `<ul>${skills.split('\n').map(skill => `<li>${skill}</li>`).join('')}</ul>` : '';
+    <!-- Middle Ad -->
+    <div class="ad-container">
+      <div class="ad-label">Advertisement</div>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6104943961690264" data-ad-slot="9658958352" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    </div>
 
-            // Format education
-            const formattedEducation = education ? education.split('\n').map(edu => `<p>${edu}</p>`).join('') : '';
+    <!-- Bottom Ad -->
+    <div class="ad-container">
+      <div class="ad-label">Advertisement</div>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6104943961690264" data-ad-slot="6987744742" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    </div>
 
-            document.getElementById('resumePreview').innerHTML = `
-                <div class="resume-header">
-                    <div>
-                        <div class="resume-name">${name}</div>
-                        <div class="resume-title">${title}</div>
-                        <div class="resume-contact">${contact}</div>
-                    </div>
-                </div>
-                <div class="resume-section">
-                    <div class="section-title">Professional Summary</div>
-                    <p>${summary}</p>
-                </div>
-                <div class="resume-section">
-                    <div class="section-title">Work Experience</div>
-                    ${formattedExperience}
-                </div>
-                <div class="resume-section">
-                    <div class="section-title">Skills</div>
-                    ${formattedSkills}
-                </div>
-                <div class="resume-section">
-                    <div class="section-title">Education</div>
-                    ${formattedEducation}
-                </div>
-            `;
-        }
+    <footer><p>&copy; 2025 Resume Arena. All rights reserved.</p></footer>
+  </div>
 
-        async function downloadResume() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF("p", "pt", "a4");
+  <script>
+    function updatePreview() {
+      const name = document.getElementById('fullName').value || 'Your Name';
+      const title = document.getElementById('jobTitle').value || 'Professional Title';
+      const contact = document.getElementById('contactInfo').value || 'Email | Phone | Website';
+      const summary = document.getElementById('summary').value;
+      const experience = document.getElementById('experience').value;
+      const skills = document.getElementById('skills').value;
+      const education = document.getElementById('education').value;
 
-            const resumeElement = document.getElementById("resumePreview");
+      document.getElementById('resumePreview').innerHTML = `
+        <div class="resume-header">
+          <div>
+            <div class="resume-name">${name}</div>
+            <div class="resume-title">${title}</div>
+            <div class="resume-contact">${contact}</div>
+          </div>
+        </div>
+        <div class="resume-section"><div class="section-title">Professional Summary</div><p>${summary}</p></div>
+        <div class="resume-section"><div class="section-title">Work Experience</div><p>${experience}</p></div>
+        <div class="resume-section"><div class="section-title">Skills</div><p>${skills}</p></div>
+        <div class="resume-section"><div class="section-title">Education</div><p>${education}</p></div>`;
+    }
 
-            await doc.html(resumeElement, {
-                callback: function (doc) {
-                    doc.save("resume.pdf");
-                },
-                margin: [20, 20, 20, 20],
-                x: 20,
-                y: 20,
-                autoPaging: "text",
-                html2canvas: {
-                    scale: 0.8
-                }
-            });
-        }
+    async function downloadResume() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF("p", "pt", "a4");
+      const resumeElement = document.getElementById("resumePreview");
 
-        // Initialize preview on page load
-        window.onload = updatePreview;
-    </script>
+      await doc.html(resumeElement, {
+        callback: function (doc) {
+          doc.save("resume.pdf");
+        },
+        x: 20,
+        y: 20,
+        width: 560,
+        windowWidth: 900
+      });
+    }
+
+    window.onload = updatePreview;
+  </script>
+
+  <!-- Google AdSense Loader -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264" crossorigin="anonymous"></script>
 </body>
 </html>
+
+           
