@@ -108,7 +108,6 @@ Certified Web Developer - 2021</textarea>
   <script>
     function formatAsList(text) {
       const lines = text.split("\n").filter(line => line.trim() !== "");
-      if (lines.length <= 1) return `<p>${text}</p>`; 
       return `<ul>` + lines.map(line => `<li>${line.replace(/^- /, "").trim()}</li>`).join("") + `</ul>`;
     }
 
@@ -125,7 +124,7 @@ Certified Web Developer - 2021</textarea>
         <div class="resume-name">${name}</div>
         <div class="resume-title">${title}</div>
         <div>${contact}</div>
-        <div class="section-title">Summary</div><p>${summary}</p>
+        <div class="section-title">Summary</div>${formatAsList(summary)}
         <div class="section-title">Experience</div>${formatAsList(experience)}
         <div class="section-title">Skills</div>${formatAsList(skills)}
         <div class="section-title">Education</div>${formatAsList(education)}
@@ -151,3 +150,4 @@ Certified Web Developer - 2021</textarea>
   </script>
 </body>
 </html>
+
