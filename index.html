@@ -1,54 +1,94 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { Sparkles, Gamepad2 } from "lucide-react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="World-class resume builder with gamer-style UI. Create professional resumes instantly with powerful templates and SEO-friendly design." />
+  <title>Gamer Resume Builder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      overflow-x: hidden;
+    }
+    header {
+      text-align: center;
+      padding: 60px 20px;
+      background: rgba(0, 0, 0, 0.6);
+      border-bottom: 2px solid #8a2be2;
+    }
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      color: #ff00ff;
+      text-shadow: 0px 0px 10px #ff00ff, 0px 0px 20px #8a2be2;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #ddd;
+    }
+    .btn {
+      display: inline-block;
+      padding: 15px 25px;
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(90deg, #ff00ff, #8a2be2);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(138,43,226,0.7), 0 0 40px rgba(255,0,255,0.6);
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+    .btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(138,43,226,1), 0 0 50px rgba(255,0,255,1);
+    }
+    .ad-space {
+      margin: 40px auto;
+      max-width: 728px;
+      height: 90px;
+      background: rgba(255,255,255,0.1);
+      border: 2px dashed #8a2be2;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aaa;
+      font-size: 1rem;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.8);
+      border-top: 2px solid #8a2be2;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>🎮 Gamer Resume Builder</h1>
+    <p>Level up your career with our next-gen resume builder!</p>
+    <!-- Start Building button with hyperlink -->
+    <!-- REPLACE THE # WITH YOUR ACTUAL URL -->
+    <a href="#" class="btn">Start Building</a>
+  </header>
 
-// Gaming style glowing button
-const GamingButton = ({ children }) => (
-  <motion.button
-    whileHover={{ scale: 1.1, boxShadow: "0px 0px 20px #a855f7" }}
-    whileTap={{ scale: 0.95 }}
-    className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-lg shadow-lg"
-  >
-    {children}
-  </motion.button>
-);
+  <!-- AdSense Placeholder -->
+  <div class="ad-space">
+    <p>Ad Space - Insert Google AdSense Code Here</p>
+  </div>
 
-export default function HomePage() {
-  return (
-    <div className="bg-gradient-to-b from-black via-purple-950 to-black min-h-screen text-gray-200 font-poppins">
-      {/* Header */}
-      <header className="flex justify-between items-center p-6 border-b border-purple-800 bg-black/40 backdrop-blur-lg">
-        <h1 className="text-3xl font-extrabold flex items-center gap-2 text-purple-400">
-          <Gamepad2 className="text-pink-500" /> ResumeArena
-        </h1>
-        <Sparkles className="w-8 h-8 text-yellow-400 animate-pulse" />
-      </header>
-
-      {/* Hero */}
-      <section className="text-center py-20 px-6 relative overflow-hidden">
-        <motion.h2
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="text-5xl font-extrabold mb-6 text-white drop-shadow-[0_0_15px_#a855f7]"
-        >
-          Build Your Resume Like a Pro 🎮
-        </motion.h2>
-        <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-10">
-          Level up your career with our world-class resume builder.
-        </p>
-        <GamingButton>Start Building</GamingButton>
-      </section>
-
-      {/* AdSense Example Slot */}
-      <div className="text-center my-8 p-6 border-2 border-purple-700 bg-black/60 rounded-xl max-w-3xl mx-auto">
-        <p className="text-gray-400">Ad Space - Replace with Google AdSense Code</p>
-      </div>
-
-      {/* Footer */}
-      <footer className="text-center py-6 bg-black/60 border-t border-purple-700">
-        <p className="text-gray-500">© 2025 ResumeArena. All rights reserved.</p>
-      </footer>
-    </div>
-  );
-}
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Gamer Resume Builder. All rights reserved.</p>
+  </footer>
+</body>
+</html>
