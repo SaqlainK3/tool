@@ -26,30 +26,92 @@
     .resume-name { font-size: 24px; font-weight: bold; }
     .resume-title { font-size: 18px; color: gray; }
     .section-title { font-size: 18px; margin-top: 15px; font-weight: bold; }
+    ul { margin: 5px 0 15px 20px; }
+    .ad-container { background: #222; padding: 10px; border-radius: 6px; margin: 20px 0; text-align: center; }
+    .ad-label { font-size: 12px; color: gray; margin-bottom: 5px; }
   </style>
 </head>
 <body>
   <div class="container">
+
+    <!-- Top Ad -->
+    <div class="ad-container">
+      <div class="ad-label">Advertisement</div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264"
+        crossorigin="anonymous"></script>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6104943961690264"
+           data-ad-slot="1291978205"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- Form Section -->
     <div class="form-section">
       <h2>Build Your Resume</h2>
       <input type="text" id="fullName" value="Alex Johnson" placeholder="Full Name">
       <input type="text" id="jobTitle" value="Frontend Developer" placeholder="Job Title">
       <input type="text" id="contactInfo" value="alex@example.com | (123) 456-7890" placeholder="Contact Information">
       <textarea id="summary">Experienced frontend developer with 5+ years building responsive web apps.</textarea>
-      <textarea id="experience">Senior Developer at TechCorp (2020–Present)</textarea>
-      <textarea id="skills">JavaScript, React, CSS</textarea>
-      <textarea id="education">B.Sc. Computer Science - Tech University</textarea>
+      <textarea id="experience">Senior Developer at TechCorp (2020–Present)
+- Led a team of 5 engineers
+- Improved site performance by 40%
+- Implemented React best practices</textarea>
+      <textarea id="skills">JavaScript
+React
+CSS
+Node.js</textarea>
+      <textarea id="education">B.Sc. Computer Science - Tech University
+Certified Web Developer - 2021</textarea>
       <button class="btn btn-primary" onclick="updatePreview()">Update Preview</button>
       <button class="btn btn-download" onclick="downloadResume()">Download Resume</button>
     </div>
 
+    <!-- Middle Ad -->
+    <div class="ad-container">
+      <div class="ad-label">Advertisement</div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264"
+        crossorigin="anonymous"></script>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6104943961690264"
+           data-ad-slot="9658958352"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- Preview Section -->
     <div class="preview-section">
       <h2>Resume Preview</h2>
       <div id="resumePreview" class="resume-preview"></div>
     </div>
+
+    <!-- Bottom Ad -->
+    <div class="ad-container">
+      <div class="ad-label">Advertisement</div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264"
+        crossorigin="anonymous"></script>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6104943961690264"
+           data-ad-slot="6987744742"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
   </div>
 
   <script>
+    function formatAsList(text) {
+      const lines = text.split("\n").filter(line => line.trim() !== "");
+      if (lines.length <= 1) return `<p>${text}</p>`; 
+      return `<ul>` + lines.map(line => `<li>${line.replace(/^- /, "").trim()}</li>`).join("") + `</ul>`;
+    }
+
     function updatePreview() {
       const name = document.getElementById("fullName").value;
       const title = document.getElementById("jobTitle").value;
@@ -64,9 +126,9 @@
         <div class="resume-title">${title}</div>
         <div>${contact}</div>
         <div class="section-title">Summary</div><p>${summary}</p>
-        <div class="section-title">Experience</div><p>${experience}</p>
-        <div class="section-title">Skills</div><p>${skills}</p>
-        <div class="section-title">Education</div><p>${education}</p>
+        <div class="section-title">Experience</div>${formatAsList(experience)}
+        <div class="section-title">Skills</div>${formatAsList(skills)}
+        <div class="section-title">Education</div>${formatAsList(education)}
       `;
     }
 
@@ -74,11 +136,9 @@
       const { jsPDF } = window.jspdf;
       const resumeElement = document.getElementById("resumePreview");
 
-      // Convert resume to canvas
       const canvas = await html2canvas(resumeElement, { scale: 2 });
       const imgData = canvas.toDataURL("image/png");
 
-      // PDF setup
       const pdf = new jsPDF("p", "mm", "a4");
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
@@ -91,5 +151,3 @@
   </script>
 </body>
 </html>
-
-   
