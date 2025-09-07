@@ -6,7 +6,7 @@
   <title>Resume Arena — Professional Resume Builder</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&family=Inter:wght@300;400;600&family=Roboto:wght@300;400;600&family=Merriweather:wght@300;400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
   <!-- jsPDF + html2canvas -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -18,7 +18,7 @@
     .form-section, .preview-section {
       background: #1a1a2e; padding: 20px; border-radius: 8px; margin-bottom: 20px;
     }
-    input, textarea { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 6px; border: none; }
+    input, textarea, select { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 6px; border: none; }
     .resume-preview { background: #fff; color: #000; padding: 20px; border-radius: 8px; min-height: 500px; }
     .btn { padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
     .btn-primary { background: purple; color: #fff; }
@@ -54,6 +54,17 @@
       <input type="text" id="fullName" value="Alex Johnson" placeholder="Full Name">
       <input type="text" id="jobTitle" value="Frontend Developer" placeholder="Job Title">
       <input type="text" id="contactInfo" value="alex@example.com | (123) 456-7890" placeholder="Contact Information">
+      
+      <!-- Font Selector -->
+      <label for="fontSelect">Choose Resume Font:</label>
+      <select id="fontSelect" onchange="updatePreview()">
+        <option value="'Poppins', sans-serif">Poppins</option>
+        <option value="'Inter', sans-serif" selected>Inter</option>
+        <option value="'Roboto', sans-serif">Roboto</option>
+        <option value="'Merriweather', serif">Merriweather</option>
+        <option value="'Montserrat', sans-serif">Montserrat</option>
+      </select>
+
       <textarea id="summary">Experienced frontend developer with 5+ years building responsive web apps.</textarea>
       <textarea id="experience">Senior Developer at TechCorp (2020–Present)
 - Led a team of 5 engineers
@@ -65,6 +76,7 @@ CSS
 Node.js</textarea>
       <textarea id="education">B.Sc. Computer Science - Tech University
 Certified Web Developer - 2021</textarea>
+      
       <button class="btn btn-primary" onclick="updatePreview()">Update Preview</button>
       <button class="btn btn-download" onclick="downloadResume()">Download Resume</button>
     </div>
@@ -105,6 +117,9 @@ Certified Web Developer - 2021</textarea>
       const experience = document.getElementById("experience").value;
       const skills = document.getElementById("skills").value;
       const education = document.getElementById("education").value;
+      const font = document.getElementById("fontSelect").value;
+
+      document.getElementById("resumePreview").style.fontFamily = font;
 
       document.getElementById("resumePreview").innerHTML = `
         <div class="resume-name">${name}</div>
