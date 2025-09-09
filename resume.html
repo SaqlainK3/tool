@@ -37,8 +37,7 @@
     <!-- Top Ad -->
     <div class="ad-container">
       <div class="ad-label">Advertisement</div>
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264"
-        crossorigin="anonymous"></script>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264" crossorigin="anonymous"></script>
       <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-6104943961690264"
@@ -81,6 +80,19 @@ Certified Web Developer - 2021</textarea>
       <button class="btn btn-download" onclick="downloadResume()">Download Resume</button>
     </div>
 
+    <!-- Middle Ad -->
+    <div class="ad-container">
+      <div class="ad-label">Advertisement</div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6104943961690264"
+           data-ad-slot="9658958352"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
     <!-- Preview Section -->
     <div class="preview-section">
       <h2>Resume Preview</h2>
@@ -90,8 +102,7 @@ Certified Web Developer - 2021</textarea>
     <!-- Bottom Ad -->
     <div class="ad-container">
       <div class="ad-label">Advertisement</div>
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264"
-        crossorigin="anonymous"></script>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264" crossorigin="anonymous"></script>
       <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-6104943961690264"
@@ -141,9 +152,24 @@ Certified Web Developer - 2021</textarea>
 
       const pdf = new jsPDF("p", "mm", "a4");
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      const pdfHeight = pdf.internal.pageSize.getHeight();
 
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      const imgWidth = pdfWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      if (imgHeight <= pdfHeight) {
+        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      } else {
+        let heightLeft = imgHeight;
+        let y = 0;
+        while (heightLeft > 0) {
+          pdf.addImage(imgData, "PNG", 0, y, imgWidth, imgHeight);
+          heightLeft -= pdfHeight;
+          y -= pdfHeight;
+          if (heightLeft > 0) pdf.addPage();
+        }
+      }
+
       pdf.save("resume.pdf");
     }
 
