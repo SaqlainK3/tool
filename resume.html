@@ -19,7 +19,17 @@
       background: #1a1a2e; padding: 20px; border-radius: 8px; margin-bottom: 20px;
     }
     input, textarea, select { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 6px; border: none; }
-    .resume-preview { background: #fff; color: #000; padding: 20px; border-radius: 8px; min-height: 500px; }
+    .resume-preview { 
+      background: #fff; color: #000; 
+      border-radius: 8px; 
+      margin: auto;
+      padding: 30px;
+      /* Keep preview exactly A4 size */
+      width: 210mm;
+      height: 297mm;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
     .btn { padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
     .btn-primary { background: purple; color: #fff; }
     .btn-download { background: #39ffd9; color: #000; margin-top: 10px; width: 100%; }
@@ -136,16 +146,19 @@ Certified Web Developer - 2021</textarea>
       const { jsPDF } = window.jspdf;
       const resumeElement = document.getElementById("resumePreview");
 
-      // Capture as canvas
-      const canvas = await html2canvas(resumeElement, { scale: 2 });
+      // High-quality canvas
+      const canvas = await html2canvas(resumeElement, { scale: 3 });
       const imgData = canvas.toDataURL("image/png");
 
-      // Force-fit to full A4 page
+      // Create A4 PDF
       const pdf = new jsPDF("p", "mm", "a4");
-      const pdfWidth = pdf.internal.pageSize.getWidth();   // 210mm
-      const pdfHeight = pdf.internal.pageSize.getHeight(); // 297mm
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
 
+      // Fill the entire page
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+      // Save PDF
       pdf.save("resume.pdf");
     }
 
