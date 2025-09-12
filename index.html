@@ -173,6 +173,8 @@
       transition: var(--transition);
       box-shadow: 0 10px 20px rgba(126, 106, 247, 0.3);
       z-index: 1;
+      cursor: pointer;
+      border: none;
     }
     
     .btn-primary:before {
@@ -469,6 +471,43 @@
     .delay-3 {
       animation-delay: 0.6s;
     }
+    
+    /* Demo pages styling */
+    .demo-page {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: var(--bg-card);
+      border-radius: var(--border-radius);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .demo-page h1 {
+      color: var(--accent-primary);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .demo-page p {
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+    
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: var(--accent-primary);
+      color: white;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+    
+    .back-btn:hover {
+      background: var(--accent-secondary);
+      transform: translateY(-3px);
+    }
   </style>
 </head>
 <body>
@@ -483,70 +522,147 @@
         ResumeArena
       </a>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="privacy.html">Privacy Policy</a></li>
-        <li><a href="terms.html">Terms</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#privacy">Privacy Policy</a></li>
+        <li><a href="#terms">Terms</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- Header / Hero section -->
-  <header>
-    <div class="hero-content">
-      <h1 class="animate">Level up your career with ResumeArena</h1>
-      <p class="animate delay-1">Create a professional resume in minutes with modern templates & real-time preview.</p>
-      <a href="#" class="btn-primary animate delay-2">
-        <span>Start Building</span>
-        <i class="fas fa-arrow-right"></i>
-      </a>
-    </div>
-  </header>
+  <!-- Main content container with routing -->
+  <div id="content">
+    <!-- Home Page (default) -->
+    <div id="home-page">
+      <!-- Header / Hero section -->
+      <header id="home">
+        <div class="hero-content">
+          <h1 class="animate">Level up your career with ResumeArena</h1>
+          <p class="animate delay-1">Create a professional resume in minutes with modern templates & real-time preview.</p>
+          <button class="btn-primary animate delay-2" onclick="navigateTo('builder')">
+            <span>Start Building</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </header>
 
-  <!-- Main content -->
-  <main>
-    <section class="features">
-      <h2>Why Choose ResumeArena?</h2>
-      <div class="feature-list">
-        <div class="feature-item animate">
-          <div class="feature-icon">
-            <i class="fas fa-dollar-sign"></i>
+      <!-- Main content -->
+      <main>
+        <section class="features">
+          <h2>Why Choose ResumeArena?</h2>
+          <div class="feature-list">
+            <div class="feature-item animate">
+              <div class="feature-icon">
+                <i class="fas fa-dollar-sign"></i>
+              </div>
+              <h3>Free & Easy to Use</h3>
+              <p>No signups required. Zero cost. Just pick a template and start editing.</p>
+            </div>
+            <div class="feature-item animate delay-1">
+              <div class="feature-icon">
+                <i class="fas fa-paint-brush"></i>
+              </div>
+              <h3>Modern Templates</h3>
+              <p>Professionally designed resume layouts that stand out in job applications.</p>
+            </div>
+            <div class="feature-item animate delay-2">
+              <div class="feature-icon">
+                <i class="fas fa-eye"></i>
+              </div>
+              <h3>Real-Time Preview</h3>
+              <p>See changes as you type, so your resume looks perfect before you download.</p>
+            </div>
+            <div class="feature-item animate delay-3">
+              <div class="feature-icon">
+                <i class="fas fa-download"></i>
+              </div>
+              <h3>Download Instantly</h3>
+              <p>Export your resume in PDF / DOCX to share with employers immediately.</p>
+            </div>
           </div>
-          <h3>Free & Easy to Use</h3>
-          <p>No signups required. Zero cost. Just pick a template and start editing.</p>
-        </div>
-        <div class="feature-item animate delay-1">
-          <div class="feature-icon">
-            <i class="fas fa-paint-brush"></i>
-          </div>
-          <h3>Modern Templates</h3>
-          <p>Professionally designed resume layouts that stand out in job applications.</p>
-        </div>
-        <div class="feature-item animate delay-2">
-          <div class="feature-icon">
-            <i class="fas fa-eye"></i>
-          </div>
-          <h3>Real-Time Preview</h3>
-          <p>See changes as you type, so your resume looks perfect before you download.</p>
-        </div>
-        <div class="feature-item animate delay-3">
-          <div class="feature-icon">
-            <i class="fas fa-download"></i>
-          </div>
-          <h3>Download Instantly</h3>
-          <p>Export your resume in PDF / DOCX to share with employers immediately.</p>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- AdSense placeholder -->
-    <div class="ad-container">
-      <div class="ad-placeholder">
-        Ad will appear here
+        <!-- AdSense placeholder -->
+        <div class="ad-container">
+          <div class="ad-placeholder">
+            Ad will appear here
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Other pages (initially hidden) -->
+    <div id="builder-page" class="hidden">
+      <div class="demo-page">
+        <h1>Resume Builder</h1>
+        <p>Welcome to our resume builder! This is where users would create their professional resumes.</p>
+        <p>In a real application, this would include:</p>
+        <ul>
+          <li>Form fields for personal information</li>
+          <li>Work experience sections</li>
+          <li>Education history</li>
+          <li>Skills and certifications</li>
+          <li>Template selection</li>
+          <li>Real-time preview</li>
+          <li>Export options (PDF, DOCX)</li>
+        </ul>
+        <a href="#" class="back-btn" onclick="navigateTo('home')">Back to Home</a>
       </div>
     </div>
-  </main>
+
+    <div id="about-page" class="hidden">
+      <div class="demo-page">
+        <h1>About ResumeArena</h1>
+        <p>ResumeArena is a free online resume builder designed to help job seekers create professional, eye-catching resumes that stand out to employers.</p>
+        <p>Our mission is to make the resume creation process simple, fast, and effective for everyone, regardless of their design skills or budget.</p>
+        <p>With a variety of modern templates and an intuitive interface, you can create a professional resume in minutes and download it in multiple formats.</p>
+        <a href="#" class="back-btn" onclick="navigateTo('home')">Back to Home</a>
+      </div>
+    </div>
+
+    <div id="privacy-page" class="hidden">
+      <div class="demo-page">
+        <h1>Privacy Policy</h1>
+        <p>At ResumeArena, we take your privacy seriously. This policy outlines how we handle your data:</p>
+        <h3>Information Collection</h3>
+        <p>We only collect information that you voluntarily provide when using our resume builder. This includes the content you add to your resume.</p>
+        <h3>Data Usage</h3>
+        <p>Your resume data is used solely for the purpose of generating your resume. We do not share your personal information with third parties.</p>
+        <h3>Data Storage</h3>
+        <p>Your resume data is stored securely and is only accessible to you. You can delete your data at any time.</p>
+        <a href="#" class="back-btn" onclick="navigateTo('home')">Back to Home</a>
+      </div>
+    </div>
+
+    <div id="terms-page" class="hidden">
+      <div class="demo-page">
+        <h1>Terms of Service</h1>
+        <p>By using ResumeArena, you agree to the following terms:</p>
+        <h3>Service Usage</h3>
+        <p>ResumeArena is provided free of charge for personal use. You may not use our service for any illegal or unauthorized purpose.</p>
+        <h3>Intellectual Property</h3>
+        <p>You retain ownership of the content you create on ResumeArena. By using our service, you grant us a license to store and display that content solely for the purpose of providing the service.</p>
+        <h3>Limitation of Liability</h3>
+        <p>ResumeArena is not responsible for the outcomes of job applications or how your resume is received by employers.</p>
+        <a href="#" class="back-btn" onclick="navigateTo('home')">Back to Home</a>
+      </div>
+    </div>
+
+    <div id="contact-page" class="hidden">
+      <div class="demo-page">
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you! Get in touch with us through any of the following methods:</p>
+        <h3>Email</h3>
+        <p>support@resumearena.com</p>
+        <h3>Social Media</h3>
+        <p>Follow us on <a href="#">Twitter</a>, <a href="#">Facebook</a>, or <a href="#">LinkedIn</a> for updates and tips.</p>
+        <h3>Feedback</h3>
+        <p>Have suggestions for improving ResumeArena? We're always looking for ways to make our service better for our users.</p>
+        <a href="#" class="back-btn" onclick="navigateTo('home')">Back to Home</a>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer>
@@ -564,18 +680,17 @@
       <div class="footer-column">
         <h3>Quick Links</h3>
         <ul class="footer-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="templates.html">Templates</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#" onclick="navigateTo('home')">Home</a></li>
+          <li><a href="#" onclick="navigateTo('builder')">Builder</a></li>
+          <li><a href="#" onclick="navigateTo('about')">About Us</a></li>
+          <li><a href="#" onclick="navigateTo('contact')">Contact</a></li>
         </ul>
       </div>
       <div class="footer-column">
         <h3>Legal</h3>
         <ul class="footer-links">
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
-          <li><a href="cookies.html">Cookie Policy</a></li>
+          <li><a href="#" onclick="navigateTo('privacy')">Privacy Policy</a></li>
+          <li><a href="#" onclick="navigateTo('terms')">Terms of Service</a></li>
         </ul>
       </div>
     </div>
@@ -656,7 +771,55 @@
           this.style.setProperty('--y', y + 'px');
         });
       });
+      
+      // Set up navigation
+      setupNavigation();
     });
+    
+    // Navigation functions
+    function setupNavigation() {
+      // Set up nav links
+      document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = this.getAttribute('href').substring(1);
+          navigateTo(target);
+        });
+      });
+      
+      // Check if there's a hash in the URL
+      if (window.location.hash) {
+        navigateTo(window.location.hash.substring(1));
+      }
+    }
+    
+    function navigateTo(page) {
+      // Hide all pages
+      document.querySelectorAll('#content > div').forEach(div => {
+        div.classList.add('hidden');
+      });
+      
+      // Show the requested page
+      const targetPage = document.getElementById(`${page}-page`);
+      if (targetPage) {
+        targetPage.classList.remove('hidden');
+        window.scrollTo(0, 0);
+        
+        // Update URL hash
+        window.location.hash = page;
+      } else {
+        // Fallback to home page
+        document.getElementById('home-page').classList.remove('hidden');
+        window.location.hash = 'home';
+      }
+    }
+    
+    // CSS class for hidden elements
+    const style = document.createElement('style');
+    style.textContent = '.hidden { display: none !important; }';
+    document.head.appendChild(style);
   </script>
 </body>
-</html>
+</html>     
+    
+   
