@@ -11,7 +11,503 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* ✅ Your CSS styles remain the same */
+    /* Base Styles & Variables */
+    :root {
+      --bg-primary: #0a0a14;
+      --bg-secondary: #151528;
+      --bg-card: #1c1c38;
+      --accent-primary: #7e6af7;
+      --accent-secondary: #ff5e94;
+      --text-primary: #f0f0ff;
+      --text-secondary: #a0a0d0;
+      --success: #00d97e;
+      --warning: #ffcf5c;
+      --danger: #ff5c7c;
+      --border-radius: 12px;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(126, 106, 247, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 85% 30%, rgba(255, 94, 148, 0.1) 0%, transparent 20%);
+    }
+    
+    /* Particle Canvas */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    
+    /* Navigation */
+    nav {
+      background-color: rgba(10, 10, 20, 0.8);
+      padding: 15px 0;
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(126, 106, 247, 0.2);
+    }
+    
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    
+    .logo i {
+      color: var(--accent-primary);
+      margin-right: 10px;
+      font-size: 1.8rem;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin: 0 15px;
+    }
+    
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+      padding: 8px 0;
+    }
+    
+    .nav-links a:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+      transition: var(--transition);
+    }
+    
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+    
+    .nav-links a:hover:after {
+      width: 100%;
+    }
+    
+    /* Header / Hero section */
+    header {
+      text-align: center;
+      padding: 120px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    
+    header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    header p {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    /* Animated Button */
+    .btn-primary {
+      display: inline-block;
+      padding: 18px 38px;
+      background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      font-size: 1.1rem;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: 0 10px 20px rgba(126, 106, 247, 0.3);
+      z-index: 1;
+      cursor: pointer;
+      border: none;
+    }
+    
+    .btn-primary:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 25px rgba(126, 106, 247, 0.4);
+    }
+    
+    .btn-primary:hover:before {
+      opacity: 1;
+    }
+    
+    .btn-primary span {
+      display: inline-block;
+      position: relative;
+      transition: var(--transition);
+    }
+    
+    .btn-primary:hover span {
+      transform: translateX(5px);
+    }
+    
+    /* Feature Section */
+    main {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    section.features {
+      margin-top: 40px;
+    }
+    
+    section.features h2 {
+      text-align: center;
+      margin-bottom: 60px;
+      font-size: 2.5rem;
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    section.features h2:after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+      border-radius: 2px;
+    }
+    
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    
+    .feature-item {
+      background: var(--bg-card);
+      padding: 30px;
+      border-radius: var(--border-radius);
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(126, 106, 247, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .feature-item:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 0;
+      background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+      transition: var(--transition);
+    }
+    
+    .feature-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+    
+    .feature-item:hover:before {
+      height: 100%;
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-block;
+    }
+    
+    .feature-item h3 {
+      margin-bottom: 15px;
+      color: var(--text-primary);
+      font-size: 1.4rem;
+    }
+    
+    .feature-item p {
+      color: var(--text-secondary);
+    }
+    
+    /* Ad Container */
+    .ad-container {
+      margin: 60px auto;
+      text-align: center;
+      max-width: 970px;
+      background: var(--bg-card);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(126, 106, 247, 0.1);
+    }
+    
+    .ad-placeholder {
+      background: rgba(160, 160, 208, 0.1);
+      color: var(--text-secondary);
+      padding: 40px 20px;
+      border-radius: 8px;
+    }
+    
+    /* Footer */
+    footer {
+      margin-top: 100px;
+      background: var(--bg-secondary);
+      padding: 60px 20px 30px;
+      text-align: center;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      text-align: left;
+    }
+    
+    .footer-column h3 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-column h3:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+      border-radius: 2px;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+    
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-block;
+    }
+    
+    .footer-links a:hover {
+      color: var(--text-primary);
+      transform: translateX(5px);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--bg-card);
+      border-radius: 50%;
+      color: var(--text-primary);
+      transition: var(--transition);
+      text-decoration: none;
+    }
+    
+    .social-links a:hover {
+      background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+      transform: translateY(-5px);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 40px;
+      margin-top: 40px;
+      border-top: 1px solid rgba(126, 106, 247, 0.2);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+      
+      .nav-container {
+        flex-direction: column;
+      }
+      
+      .nav-links {
+        margin-top: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .nav-links li {
+        margin: 8px 12px;
+      }
+      
+      .feature-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      
+      .footer-column h3:after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+    
+    /* Animation for elements */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate {
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+    }
+    
+    .delay-1 {
+      animation-delay: 0.2s;
+    }
+    
+    .delay-2 {
+      animation-delay: 0.4s;
+    }
+    
+    .delay-3 {
+      animation-delay: 0.6s;
+    }
+    
+    /* Demo pages styling */
+    .demo-page {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: var(--bg-card);
+      border-radius: var(--border-radius);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .demo-page h1 {
+      color: var(--accent-primary);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .demo-page p {
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+    
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: var(--accent-primary);
+      color: white;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+    
+    .back-btn:hover {
+      background: var(--accent-secondary);
+      transform: translateY(-3px);
+    }
   </style>
 </head>
 <body>
@@ -35,16 +531,17 @@
     </div>
   </nav>
 
-  <!-- Main content container -->
+  <!-- Main content container with routing -->
   <div id="content">
-    <!-- Home Page -->
+    <!-- Home Page (default) -->
     <div id="home-page">
+      <!-- Header / Hero section -->
       <header id="home">
         <div class="hero-content">
           <h1 class="animate">Level up your career with ResumeArena</h1>
           <p class="animate delay-1">Create a professional resume in minutes with modern templates & real-time preview.</p>
-          <!-- ✅ Fixed Start Building button -->
-          <a href="resume.html" class="btn-primary animate delay-2">
+          <!-- Updated Start Building button with hyperlink -->
+          <a href="resume.html" class="btn-primary animate delay-2" target="_blank">
             <span>Start Building</span>
             <i class="fas fa-external-link-alt"></i>
           </a>
@@ -95,6 +592,77 @@
         </div>
       </main>
     </div>
+
+    <!-- Other pages (initially hidden) -->
+    <div id="builder-page" class="hidden">
+      <div class="demo-page">
+        <h1>Resume Builder</h1>
+        <p>Welcome to our resume builder! This is where users would create their professional resumes.</p>
+        <p>In a real application, this would include:</p>
+        <ul>
+          <li>Form fields for personal information</li>
+          <li>Work experience sections</li>
+          <li>Education history</li>
+          <li>Skills and certifications</li>
+          <li>Template selection</li>
+          <li>Real-time preview</li>
+          <li>Export options (PDF, DOCX)</li>
+        </ul>
+        <a href="#" class="back-btn" onclick="navigateTo('home')">Back to Home</a>
+      </div>
+    </div>
+
+    <div id="about-page" class="hidden">
+      <div class="demo-page">
+        <h1>About ResumeArena</h1>
+        <p>ResumeArena is a free online resume builder designed to help job seekers create professional, eye-catching resumes that stand out to employers.</p>
+        <p>Our mission is to make the resume creation process simple, fast, and effective for everyone, regardless of their design skills or budget.</p>
+        <p>With a variety of modern templates and an intuitive interface, you can create a professional resume in minutes and download it in multiple formats.</p>
+        <a href="#" class="back-btn" onclick="navigateTo('home')">Back to Home</a>
+      </div>
+    </div>
+
+    <div id="privacy-page" class="hidden">
+      <div class="demo-page">
+        <h1>Privacy Policy</h1>
+        <p>At ResumeArena, we take your privacy seriously. This policy outlines how we handle your data:</p>
+        <h3>Information Collection</h3>
+        <p>We only collect information that you voluntarily provide when using our resume builder. This includes the content you add to your resume.</p>
+        <h3>Data Usage</h3>
+        <p>Your resume data is used solely for the purpose of generating your resume. We do not share your personal information with third parties.</p>
+        <h3>Data Storage</h3>
+        <p>Your resume data is stored securely and is only accessible to you. You can delete your data at any time.</p>
+        <a href="#" class="back-btn" onclick="navigateTo('home')">Back to Home</a>
+      </div>
+    </div>
+
+    <div id="terms-page" class="hidden">
+      <div class="demo-page">
+        <h1>Terms of Service</h1>
+        <p>By using ResumeArena, you agree to the following terms:</p>
+        <h3>Service Usage</h3>
+        <p>ResumeArena is provided free of charge for personal use. You may not use our service for any illegal or unauthorized purpose.</p>
+        <h3>Intellectual Property</h3>
+        <p>You retain ownership of the content you create on ResumeArena. By using our service, you grant us a license to store and display that content solely for the purpose of providing the service.</p>
+        <h3>Limitation of Liability</h3>
+        <p>ResumeArena is not responsible for the outcomes of job applications or how your resume is received by employers.</p>
+        <a href="#" class="back-btn" onclick="navigateTo('home')">Back to Home</a>
+      </div>
+    </div>
+
+    <div id="contact-page" class="hidden">
+      <div class="demo-page">
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you! Get in touch with us through any of the following methods:</p>
+        <h3>Email</h3>
+        <p>support@resumearena.com</p>
+        <h3>Social Media</h3>
+        <p>Follow us on <a href="#">Twitter</a>, <a href="#">Facebook</a>, or <a href="#">LinkedIn</a> for updates and tips.</p>
+        <h3>Feedback</h3>
+        <p>Have suggestions for improving ResumeArena? We're always looking for ways to make our service better for our users.</p>
+        <a href="#" class="back-btn" onclick="navigateTo('home')">Back to Home</a>
+      </div>
+    </div>
   </div>
 
   <!-- Footer -->
@@ -113,18 +681,17 @@
       <div class="footer-column">
         <h3>Quick Links</h3>
         <ul class="footer-links">
-          <li><a href="#">Home</a></li>
-          <!-- ✅ Fixed Footer Builder link -->
-          <li><a href="resume.html">Builder</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#" onclick="navigateTo('home')">Home</a></li>
+          <li><a href="#" onclick="navigateTo('builder')">Builder</a></li>
+          <li><a href="#" onclick="navigateTo('about')">About Us</a></li>
+          <li><a href="#" onclick="navigateTo('contact')">Contact</a></li>
         </ul>
       </div>
       <div class="footer-column">
         <h3>Legal</h3>
         <ul class="footer-links">
-          <li><a href="#privacy">Privacy Policy</a></li>
-          <li><a href="#terms">Terms of Service</a></li>
+          <li><a href="#" onclick="navigateTo('privacy')">Privacy Policy</a></li>
+          <li><a href="#" onclick="navigateTo('terms')">Terms of Service</a></li>
         </ul>
       </div>
     </div>
@@ -136,9 +703,122 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
-    // ✅ Keeping your JavaScript same
+    // Initialize particles.js
+    document.addEventListener('DOMContentLoaded', function() {
+      particlesJS('particles-js', {
+        particles: {
+          number: { value: 80, density: { enable: true, value_area: 800 } },
+          color: { value: "#7e6af7" },
+          shape: { type: "circle" },
+          opacity: { value: 0.5, random: true },
+          size: { value: 3, random: true },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#7e6af7",
+            opacity: 0.2,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 2,
+            direction: "none",
+            random: true,
+            straight: false,
+            out_mode: "out",
+            bounce: false
+          }
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: { enable: true, mode: "grab" },
+            onclick: { enable: true, mode: "push" },
+            resize: true
+          }
+        },
+        retina_detect: true
+      });
+      
+      // Add scroll animations
+      const animatedElements = document.querySelectorAll('.animate');
+      
+      function checkScroll() {
+        animatedElements.forEach(element => {
+          const elementPosition = element.getBoundingClientRect().top;
+          const screenPosition = window.innerHeight / 1.3;
+          
+          if (elementPosition < screenPosition) {
+            element.style.opacity = 1;
+          }
+        });
+      }
+      
+      // Initial check
+      checkScroll();
+      
+      // Listen for scroll events
+      window.addEventListener('scroll', checkScroll);
+      
+      // Enhanced button hover effect
+      const buttons = document.querySelectorAll('.btn-primary');
+      
+      buttons.forEach(button => {
+        button.addEventListener('mouseenter', function(e) {
+          const x = e.pageX - this.offsetLeft;
+          const y = e.pageY - this.offsetTop;
+          
+          this.style.setProperty('--x', x + 'px');
+          this.style.setProperty('--y', y + 'px');
+        });
+      });
+      
+      // Set up navigation
+      setupNavigation();
+    });
+    
+    // Navigation functions
+    function setupNavigation() {
+      // Set up nav links
+      document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = this.getAttribute('href').substring(1);
+          navigateTo(target);
+        });
+      });
+      
+      // Check if there's a hash in the URL
+      if (window.location.hash) {
+        navigateTo(window.location.hash.substring(1));
+      }
+    }
+    
+    function navigateTo(page) {
+      // Hide all pages
+      document.querySelectorAll('#content > div').forEach(div => {
+        div.classList.add('hidden');
+      });
+      
+      // Show the requested page
+      const targetPage = document.getElementById(`${page}-page`);
+      if (targetPage) {
+        targetPage.classList.remove('hidden');
+        window.scrollTo(0, 0);
+        
+        // Update URL hash
+        window.location.hash = page;
+      } else {
+        // Fallback to home page
+        document.getElementById('home-page').classList.remove('hidden');
+        window.location.hash = 'home';
+      }
+    }
+    
+    // CSS class for hidden elements
+    const style = document.createElement('style');
+    style.textContent = '.hidden { display: none !important; }';
+    document.head.appendChild(style);
   </script>
 </body>
 </html>
-
-    
