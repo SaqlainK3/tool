@@ -3,586 +3,323 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resume Arena — Professional Resume Builder</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;600&family=Inter:wght@300;400;600&family=Roboto:wght@300;400;600&family=Merriweather:wght@300;400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- jsPDF + html2canvas -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
+  <title>Professional Resume Builder</title>
   <style>
-    :root {
-      --primary-bg: #0d0d1a;
-      --secondary-bg: #1a1a2e;
-      --accent-color: #39ffd9;
-      --text-color: #fff;
-      --card-bg: #fff;
-      --card-text: #000;
-      --purple: #8a2be2;
-    }
-    
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     
-    body { 
-      font-family: Inter, sans-serif; 
-      background: var(--primary-bg); 
-      color: var(--text-color); 
-      margin: 0; 
-      padding: 0;
-      line-height: 1.6;
+    body {
+      background: linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 100%);
+      color: #fff;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     
-    /* Navigation */
-    .navbar {
-      background: var(--secondary-bg);
-      padding: 15px 20px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-    
-    .nav-container {
+    .container {
+      width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
     
-    .logo {
-      font-family: Orbitron, sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--accent-color);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
     }
     
-    .logo i {
-      margin-right: 8px;
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #39ffd9;
     }
     
-    .nav-links {
-      display: flex;
-      gap: 20px;
-    }
-    
-    .nav-links a {
-      color: var(--text-color);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    
-    .nav-links a:hover {
-      color: var(--accent-color);
-    }
-    
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--text-color);
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-    
-    /* Container */
-    .container { 
-      max-width: 1200px; 
-      margin: 20px auto; 
-      padding: 0 20px;
-    }
-    
-    /* Grid Layout */
-    .main-grid {
+    .builder-container {
       display: grid;
       grid-template-columns: 1fr;
       gap: 20px;
     }
     
     @media (min-width: 992px) {
-      .main-grid {
+      .builder-container {
         grid-template-columns: 1fr 1fr;
       }
     }
     
-    .form-section, .preview-section {
-      background: var(--secondary-bg); 
-      padding: 20px; 
-      border-radius: 8px; 
+    .editor-panel {
+      background: rgba(26, 26, 46, 0.8);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .preview-panel {
+      background: rgba(26, 26, 46, 0.8);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    h2 {
+      color: #39ffd9;
       margin-bottom: 20px;
+      font-size: 1.8rem;
     }
     
-    input, textarea, select { 
-      width: 100%; 
-      padding: 12px; 
-      margin-bottom: 15px; 
-      border-radius: 6px; 
-      border: 1px solid #333;
-      background: #252547;
-      color: var(--text-color);
-      font-family: inherit;
-    }
-    
-    textarea {
-      min-height: 100px;
-      resize: vertical;
+    .form-group {
+      margin-bottom: 15px;
     }
     
     label {
       display: block;
       margin-bottom: 8px;
       font-weight: 500;
+      color: #ddd;
     }
     
-    .resume-preview { 
-      background: var(--card-bg); 
-      color: var(--card-text); 
-      border-radius: 8px; 
-      margin: auto;
-      padding: 30px;
-      /* Keep preview exactly A4 size */
-      width: 210mm;
-      height: 297mm;
-      box-sizing: border-box;
-      overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-    
-    .btn { 
-      padding: 12px 20px; 
-      border: none; 
-      border-radius: 6px; 
-      cursor: pointer; 
-      font-weight: bold; 
-      transition: all 0.3s;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .btn i {
-      margin-right: 8px;
-    }
-    
-    .btn-primary { 
-      background: var(--purple); 
-      color: var(--text-color); 
-    }
-    
-    .btn-primary:hover {
-      background: #6a1cb9;
-    }
-    
-    .btn-download { 
-      background: var(--accent-color); 
-      color: #000; 
-      margin-top: 10px; 
-      width: 100%; 
-    }
-    
-    .btn-download:hover {
-      background: #2ae0ba;
-    }
-    
-    .resume-name { 
-      font-size: 24px; 
-      font-weight: bold; 
-      margin-bottom: 5px;
-    }
-    
-    .resume-title { 
-      font-size: 18px; 
-      color: gray; 
-      margin-bottom: 15px;
-    }
-    
-    .section-title { 
-      font-size: 18px; 
-      margin-top: 15px; 
-      font-weight: bold; 
-      border-bottom: 2px solid #eee;
-      padding-bottom: 5px;
-      margin-bottom: 10px;
-    }
-    
-    ul { 
-      margin: 5px 0 15px 20px; 
-    }
-    
-    li {
-      margin-bottom: 5px;
-    }
-    
-    .ad-container { 
-      background: #222; 
-      padding: 10px; 
-      border-radius: 6px; 
-      margin: 20px 0; 
-      text-align: center; 
-    }
-    
-    .ad-label { 
-      font-size: 12px; 
-      color: gray; 
-      margin-bottom: 5px; 
-    }
-    
-    /* Templates Page */
-    .templates-container {
-      padding: 20px 0;
-    }
-    
-    .page-title {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      text-align: center;
-      color: var(--accent-color);
-    }
-    
-    .templates-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
-    
-    .template-card {
-      background: var(--secondary-bg);
-      border-radius: 8px;
-      overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-    
-    .template-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    }
-    
-    .template-img {
+    input, textarea, select {
       width: 100%;
-      height: 200px;
-      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      padding: 12px 15px;
+      border-radius: 6px;
+      border: 1px solid #444;
+      background: rgba(30, 30, 60, 0.6);
+      color: #fff;
+      font-size: 16px;
+    }
+    
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    button {
+      background: linear-gradient(90deg, #7e6af7 0%, #39ffd9 100%);
+      color: #021023;
+      border: none;
+      padding: 14px 25px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 1.5rem;
-      font-weight: bold;
     }
     
-    .template-info {
-      padding: 15px;
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(126, 106, 247, 0.4);
     }
     
-    .template-title {
-      font-size: 1.2rem;
-      margin-bottom: 8px;
-    }
-    
-    .template-desc {
-      font-size: 0.9rem;
-      color: #aaa;
-      margin-bottom: 15px;
-    }
-    
-    /* Mobile Responsiveness */
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: var(--secondary-bg);
-        flex-direction: column;
-        padding: 20px;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-      }
-      
-      .nav-links.active {
-        display: flex;
-      }
-      
-      .mobile-menu-btn {
-        display: block;
-      }
-      
-      .resume-preview {
-        width: 100%;
-        height: auto;
-        min-height: 400px;
-      }
-      
-      .template-img {
-        height: 150px;
-      }
-    }
-    
-    /* Home link styling */
-    .home-link {
-      display: inline-flex;
-      align-items: center;
-      color: var(--accent-color);
-      text-decoration: none;
-      margin-bottom: 20px;
-      font-weight: 500;
-    }
-    
-    .home-link i {
+    button i {
       margin-right: 8px;
     }
     
-    /* Template preview modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
+    .resume-preview {
+      background: white;
+      color: #333;
+      border-radius: 8px;
+      padding: 30px;
+      flex: 1;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow: auto;
     }
     
-    .modal-content {
-      background: var(--secondary-bg);
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 90%;
-      max-height: 90%;
-      overflow: auto;
+    .resume-header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #39ffd9;
+    }
+    
+    .resume-name {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: #1a1a2e;
+    }
+    
+    .resume-title {
+      font-size: 18px;
+      color: #7e6af7;
+      margin-bottom: 10px;
+    }
+    
+    .resume-contact {
+      margin-bottom: 5px;
+      color: #555;
+    }
+    
+    .resume-section {
+      margin-top: 20px;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a2e;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .resume-list {
+      list-style-type: none;
+    }
+    
+    .resume-list li {
+      margin-bottom: 8px;
+      padding-left: 20px;
       position: relative;
     }
     
-    .close-modal {
+    .resume-list li:before {
+      content: "•";
+      color: #7e6af7;
+      font-weight: bold;
       position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 1.5rem;
-      color: var(--text-color);
-      background: none;
-      border: none;
-      cursor: pointer;
+      left: 0;
     }
     
-    /* Loading spinner */
-    .spinner {
-      display: none;
-      width: 40px;
-      height: 40px;
-      margin: 10px auto;
-      border: 4px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top: 4px solid var(--accent-color);
-      animation: spin 1s linear infinite;
+    .download-btn {
+      background: linear-gradient(90deg, #39ffd9 0%, #2ae0ba 100%);
+      margin-top: 20px;
+      width: 100%;
     }
     
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .instructions {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    
+    .instructions h3 {
+      color: #39ffd9;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="index.html" class="logo"><i class="fas fa-file-alt"></i> Resume Arena</a>
-      
-      <div class="nav-links">
-        <a href="index.html"><i class="fas fa-home"></i> Home</a>
-        <a href="#templates" onclick="showTemplates()"><i class="fas fa-palette"></i> Templates</a>
-        <a href="#"><i class="fas fa-info-circle"></i> About</a>
-        <a href="#"><i class="fas fa-envelope"></i> Contact</a>
-      </div>
-      
-      <button class="mobile-menu-btn" id="mobileMenuBtn">
-        <i class="fas fa-bars"></i>
-      </button>
-    </div>
-  </nav>
-
   <div class="container">
-    <!-- Back to Home Link (for templates page) -->
-    <a href="index.html" class="home-link" id="homeLink" style="display: none;">
-      <i class="fas fa-arrow-left"></i> Back to Home
-    </a>
-
-    <!-- Main Content (changes based on page) -->
-    <div id="main-content">
-      <!-- Home/Build Page Content -->
-      <div class="main-grid">
-        <!-- Top Ad -->
-        <div class="ad-container" style="grid-column: 1 / -1;">
-          <div class="ad-label">Advertisement</div>
-          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264"
-            crossorigin="anonymous"></script>
-          <ins class="adsbygoogle"
-               style="display:block"
-               data-ad-client="ca-pub-6104943961690264"
-               data-ad-slot="1291978205"
-               data-ad-format="auto"
-               data-full-width-responsive="true"></ins>
-          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    <header>
+      <h1>Professional Resume Builder</h1>
+      <p>Create a polished resume that looks great on any device</p>
+    </header>
+    
+    <div class="builder-container">
+      <div class="editor-panel">
+        <h2>Edit Your Resume</h2>
+        
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" value="Alex Johnson">
         </div>
-
-        <!-- Form Section -->
-        <div class="form-section">
-          <h2><i class="fas fa-pencil-alt"></i> Build Your Resume</h2>
-          <input type="text" id="fullName" value="Alex Johnson" placeholder="Full Name">
-          <input type="text" id="jobTitle" value="Frontend Developer" placeholder="Job Title">
-          <input type="text" id="contactInfo" value="alex@example.com | (123) 456-7890" placeholder="Contact Information">
-          
-          <!-- Font Selector -->
-          <label for="fontSelect">Choose Resume Font:</label>
-          <select id="fontSelect" onchange="updatePreview()">
-            <option value="'Poppins', sans-serif">Poppins</option>
-            <option value="'Inter', sans-serif" selected>Inter</option>
-            <option value="'Roboto', sans-serif">Roboto</option>
-            <option value="'Merriweather', serif">Merriweather</option>
-            <option value="'Montserrat', sans-serif">Montserrat</option>
+        
+        <div class="form-group">
+          <label for="jobTitle">Job Title</label>
+          <input type="text" id="jobTitle" value="Frontend Developer">
+        </div>
+        
+        <div class="form-group">
+          <label for="contactInfo">Contact Information</label>
+          <input type="text" id="contactInfo" value="alex@example.com | (123) 456-7890">
+        </div>
+        
+        <div class="form-group">
+          <label for="fontSelect">Choose Font</label>
+          <select id="fontSelect">
+            <option value="'Segoe UI', sans-serif">Segoe UI (Modern)</option>
+            <option value="'Georgia', serif">Georgia (Professional)</option>
+            <option value="'Arial', sans-serif">Arial (Clean)</option>
+            <option value="'Verdana', sans-serif">Verdana (Readable)</option>
           </select>
-
-          <label for="summary">Professional Summary:</label>
+        </div>
+        
+        <div class="form-group">
+          <label for="summary">Professional Summary</label>
           <textarea id="summary">Experienced frontend developer with 5+ years building responsive web apps.</textarea>
-          
-          <label for="experience">Work Experience:</label>
+        </div>
+        
+        <div class="form-group">
+          <label for="experience">Work Experience</label>
           <textarea id="experience">Senior Developer at TechCorp (2020–Present)
 - Led a team of 5 engineers
 - Improved site performance by 40%
 - Implemented React best practices</textarea>
-          
-          <label for="skills">Skills:</label>
+        </div>
+        
+        <div class="form-group">
+          <label for="skills">Skills</label>
           <textarea id="skills">JavaScript
 React
 CSS
 Node.js</textarea>
-          
-          <label for="education">Education:</label>
+        </div>
+        
+        <div class="form-group">
+          <label for="education">Education</label>
           <textarea id="education">B.Sc. Computer Science - Tech University
 Certified Web Developer - 2021</textarea>
-          
-          <button class="btn btn-primary" onclick="updatePreview()"><i class="fas fa-sync"></i> Update Preview</button>
-          <button class="btn btn-download" onclick="downloadResume()"><i class="fas fa-download"></i> Download Resume</button>
-          <div class="spinner" id="downloadSpinner"></div>
         </div>
-
-        <!-- Preview Section -->
-        <div class="preview-section">
-          <h2><i class="fas fa-eye"></i> Resume Preview</h2>
-          <div id="resumePreview" class="resume-preview"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Templates Section (initially hidden) -->
-    <div id="templatesSection" style="display: none;">
-      <div class="templates-container">
-        <h1 class="page-title">Choose a Template</h1>
-        <p style="text-align: center; margin-bottom: 30px;">Select from our professional resume templates to get started</p>
         
-        <div class="templates-grid">
-          <div class="template-card" data-template="modern">
-            <div class="template-img">Modern</div>
-            <div class="template-info">
-              <h3 class="template-title">Modern</h3>
-              <p class="template-desc">Clean and contemporary design</p>
-              <button class="btn btn-primary" onclick="selectTemplate('modern')">Use This Template</button>
-            </div>
-          </div>
-          
-          <div class="template-card" data-template="professional">
-            <div class="template-img">Professional</div>
-            <div class="template-info">
-              <h3 class="template-title">Professional</h3>
-              <p class="template-desc">Traditional corporate style</p>
-              <button class="btn btn-primary" onclick="selectTemplate('professional')">Use This Template</button>
-            </div>
-          </div>
-          
-          <div class="template-card" data-template="creative">
-            <div class="template-img">Creative</div>
-            <div class="template-info">
-              <h3 class="template-title">Creative</h3>
-              <p class="template-desc">For design and creative roles</p>
-              <button class="btn btn-primary" onclick="selectTemplate('creative')">Use This Template</button>
-            </div>
-          </div>
-          
-          <div class="template-card" data-template="minimalist">
-            <div class="template-img">Minimalist</div>
-            <div class="template-info">
-              <h3 class="template-title">Minimalist</h3>
-              <p class="template-desc">Simple and clean layout</p>
-              <button class="btn btn-primary" onclick="selectTemplate('minimalist')">Use This Template</button>
-            </div>
-          </div>
-          
-          <div class="template-card" data-template="executive">
-            <div class="template-img">Executive</div>
-            <div class="template-info">
-              <h3 class="template-title">Executive</h3>
-              <p class="template-desc">For senior leadership roles</p>
-              <button class="btn btn-primary" onclick="selectTemplate('executive')">Use This Template</button>
-            </div>
-          </div>
-          
-          <div class="template-card" data-template="academic">
-            <div class="template-img">Academic</div>
-            <div class="template-info">
-              <h3 class="template-title">Academic</h3>
-              <p class="template-desc">For research and academic positions</p>
-              <button class="btn btn-primary" onclick="selectTemplate('academic')">Use This Template</button>
-            </div>
-          </div>
+        <button onclick="updatePreview()">
+          <i class="fas fa-sync"></i> Update Preview
+        </button>
+      </div>
+      
+      <div class="preview-panel">
+        <h2>Resume Preview</h2>
+        <div id="resumePreview" class="resume-preview">
+          <!-- Preview will be generated here -->
+        </div>
+        
+        <button class="download-btn" onclick="downloadResume()">
+          <i class="fas fa-download"></i> Download Resume as PDF
+        </button>
+        
+       <div class="instructions">
+          <h3>Pro Tip for Better PDF Results</h3>
+          <p>WRITE AS MUCH YOU CAN THIS WILL MAKE YOUR RESUME IMPRESSIVE:</p>
+          <ul>
+            <li>Layout: Portrait</li>
+            <li>Paper size: A4 or Letter</li>
+            <li>Margins: Default or None</li>
+            <li>Options: Background graphics enabled</li>
+          </ul>
         </div>
       </div>
     </div>
-
-    <!-- Bottom Ad -->
-    <div class="ad-container">
-      <div class="ad-label">Advertisement</div>
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264"
-        crossorigin="anonymous"></script>
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-6104943961690264"
-           data-ad-slot="6987744742"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
   </div>
 
-  <!-- Template Preview Modal -->
-  <div class="modal" id="templateModal">
-    <div class="modal-content">
-      <button class="close-modal" id="closeModal">&times;</button>
-      <div id="modalTemplateContent"></div>
-    </div>
-  </div>
+  <!-- Include Font Awesome for icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  
+  <!-- Include jsPDF and html2canvas from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <script>
     // Format text as list items
     function formatAsList(text) {
       const lines = text.split("\n").filter(line => line.trim() !== "");
-      return `<ul>` + lines.map(line => `<li>${line.replace(/^- /, "").trim()}</li>`).join("") + `</ul>`;
+      return `<ul class="resume-list">` + 
+        lines.map(line => `<li>${line.replace(/^- /, "").trim()}</li>`).join("") + 
+        `</ul>`;
     }
 
     // Update the resume preview
@@ -600,123 +337,90 @@ Certified Web Developer - 2021</textarea>
       if (previewElement) {
         previewElement.style.fontFamily = font;
         previewElement.innerHTML = `
-          <div class="resume-name">${name}</div>
-          <div class="resume-title">${title}</div>
-          <div>${contact}</div>
-          <div class="section-title">Summary</div>${formatAsList(summary)}
-          <div class="section-title">Experience</div>${formatAsList(experience)}
-          <div class="section-title">Skills</div>${formatAsList(skills)}
-          <div class="section-title">Education</div>${formatAsList(education)}
+          <div class="resume-header">
+            <div class="resume-name">${name}</div>
+            <div class="resume-title">${title}</div>
+            <div class="resume-contact">${contact}</div>
+          </div>
+          
+          <div class="resume-section">
+            <div class="section-title">Summary</div>
+            ${formatAsList(summary)}
+          </div>
+          
+          <div class="resume-section">
+            <div class="section-title">Experience</div>
+            ${formatAsList(experience)}
+          </div>
+          
+          <div class="resume-section">
+            <div class="section-title">Skills</div>
+            ${formatAsList(skills)}
+          </div>
+          
+          <div class="resume-section">
+            <div class="section-title">Education</div>
+            ${formatAsList(education)}
+          </div>
         `;
       }
     }
 
     // Download resume as PDF
     async function downloadResume() {
-      const spinner = document.getElementById('downloadSpinner');
-      if (spinner) spinner.style.display = 'block';
-      
       try {
         const { jsPDF } = window.jspdf;
         const resumeElement = document.getElementById("resumePreview");
-
-        // High-quality canvas
-        const canvas = await html2canvas(resumeElement, { scale: 3 });
-        const imgData = canvas.toDataURL("image/png");
-
-        // Create A4 PDF
+        
+        // Create a clone of the element to avoid modifying the original
+        const clone = resumeElement.cloneNode(true);
+        
+        // Apply print-specific styles to the clone
+        clone.style.width = "210mm";
+        clone.style.padding = "25mm";
+        clone.style.fontSize = "12pt";
+        clone.style.lineHeight = "1.4";
+        
+        // Temporarily append to document to calculate dimensions
+        clone.style.position = "absolute";
+        clone.style.left = "-9999px";
+        document.body.appendChild(clone);
+        
+        // Create PDF
         const pdf = new jsPDF("p", "mm", "a4");
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
-
-        // Fill the entire page
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-
+        
+        // Generate canvas from clone
+        const canvas = await html2canvas(clone, {
+          scale: 2, // Higher scale for better quality
+          useCORS: true,
+          logging: false
+        });
+        
+        // Remove the clone from document
+        document.body.removeChild(clone);
+        
+        const imgData = canvas.toDataURL("image/png");
+        
+        // Calculate dimensions to fit the page
+        const imgWidth = pdfWidth;
+        const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+        
+        // Add image to PDF
+        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+        
         // Save PDF
-        pdf.save("resume.pdf");
+        pdf.save("professional-resume.pdf");
       } catch (error) {
         console.error("Error generating PDF:", error);
         alert("There was an error generating your PDF. Please try again.");
-      } finally {
-        if (spinner) spinner.style.display = 'none';
       }
     }
-
-    // Show templates section
-    function showTemplates() {
-      document.getElementById('main-content').style.display = 'none';
-      document.getElementById('templatesSection').style.display = 'block';
-      document.getElementById('homeLink').style.display = 'inline-flex';
-      window.scrollTo(0, 0);
-    }
-
-    // Show builder section
-    function showBuilder() {
-      document.getElementById('main-content').style.display = 'block';
-      document.getElementById('templatesSection').style.display = 'none';
-      document.getElementById('homeLink').style.display = 'none';
-      window.scrollTo(0, 0);
-    }
-
-    // Function to handle template selection
-    function selectTemplate(templateName) {
-      // In a real app, this would change the resume styling
-      alert(`Selected the ${templateName} template! Now customizing your resume...`);
-      showBuilder();
-      
-      // Here you would apply the template styling to the resume
-      // For demonstration, we'll just change the font based on template
-      const fontSelect = document.getElementById('fontSelect');
-      switch(templateName) {
-        case 'modern':
-          fontSelect.value = "'Montserrat', sans-serif";
-          break;
-        case 'professional':
-          fontSelect.value = "'Roboto', sans-serif";
-          break;
-        case 'creative':
-          fontSelect.value = "'Poppins', sans-serif";
-          break;
-        case 'minimalist':
-          fontSelect.value = "'Inter', sans-serif";
-          break;
-        case 'executive':
-          fontSelect.value = "'Merriweather', serif";
-          break;
-        case 'academic':
-          fontSelect.value = "'Merriweather', serif";
-          break;
-      }
-      
-      updatePreview();
-    }
-
-    // Set up mobile menu toggle
-    document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-      document.querySelector('.nav-links').classList.toggle('active');
-    });
-
-    // Set up modal close button
-    document.getElementById('closeModal').addEventListener('click', function() {
-      document.getElementById('templateModal').style.display = 'none';
-    });
-
-    // Set up back to home link
-    document.getElementById('homeLink').addEventListener('click', function(e) {
-      e.preventDefault();
-      showBuilder();
-    });
 
     // Initialize the preview when page loads
     window.onload = function() {
       updatePreview();
-      
-      // Check if URL has template parameter
-      const urlParams = new URLSearchParams(window.location.search);
-      const templateParam = urlParams.get('template');
-      if (templateParam) {
-        selectTemplate(templateParam);
-      }
     };
   </script>
 </body>
