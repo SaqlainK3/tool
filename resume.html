@@ -200,19 +200,24 @@
       width: 100%;
     }
     
-    .pro-tip {
+    .instructions {
       background: rgba(255, 255, 255, 0.05);
       padding: 15px;
       border-radius: 8px;
       margin-top: 20px;
       font-size: 14px;
-      text-align: center;
     }
     
-    .pro-tip h3 {
+    .instructions h3 {
       color: #39ffd9;
       margin-bottom: 10px;
     }
+    
+    /* Template Styles */
+    .template-modern { font-family: 'Segoe UI', sans-serif; }
+    .template-minimal { font-family: 'Arial', sans-serif; }
+    .template-classic { font-family: 'Georgia', serif; color: #222; }
+    .template-creative { font-family: 'Verdana', sans-serif; color: #2c3e50; }
   </style>
 </head>
 <body>
@@ -250,6 +255,16 @@
             <option value="'Verdana', sans-serif">Verdana (Readable)</option>
           </select>
         </div>
+
+        <div class="form-group">
+          <label for="templateSelect">Choose Template</label>
+          <select id="templateSelect">
+            <option value="template-modern">Modern</option>
+            <option value="template-minimal">Minimal</option>
+            <option value="template-classic">Classic</option>
+            <option value="template-creative">Creative</option>
+          </select>
+        </div>
         
         <div class="form-group">
           <label for="summary">Professional Summary</label>
@@ -285,18 +300,7 @@ Certified Web Developer - 2021</textarea>
       
       <div class="preview-panel">
         <h2>Resume Preview</h2>
-
-        <!-- Template Selector -->
-        <div class="form-group">
-          <label for="templateSelect">Choose Template</label>
-          <select id="templateSelect" onchange="updatePreview()">
-            <option value="default">Default Template</option>
-            <option value="modern">Modern Template</option>
-            <option value="classic">Classic Template</option>
-          </select>
-        </div>
-
-        <div id="resumePreview" class="resume-preview">
+        <div id="resumePreview" class="resume-preview template-modern">
           <!-- Preview will be generated here -->
         </div>
         
@@ -304,13 +308,28 @@ Certified Web Developer - 2021</textarea>
           <i class="fas fa-download"></i> Download Resume as PDF
         </button>
         
-        <div class="pro-tip">
+        <div class="instructions">
           <h3>Pro Tip</h3>
-          <p>FILL AS MUCH YOU CAN — THIS WILL MAKE YOUR RESUME IMPRESSIVE ✅</p>
+          <p>FILL AS MUCH YOU CAN — THIS WILL MAKE YOUR RESUME IMPRESSIVE.</p>
         </div>
+
+        <!-- Google AdSense -->
+        <ins class="adsbygoogle"
+            style="display:block; margin-top:20px;"
+            data-ad-client="ca-pub-6104943961690264"
+            data-ad-slot="7551669764"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
       </div>
     </div>
   </div>
+
+  <!-- AdSense Script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264"
+     crossorigin="anonymous"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 
   <!-- Include Font Awesome for icons -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
@@ -340,18 +359,15 @@ Certified Web Developer - 2021</textarea>
       const font = document.getElementById("fontSelect").value;
       const template = document.getElementById("templateSelect").value;
 
-      let templateStyle = "";
-      if (template === "modern") {
-        templateStyle = "border-left: 5px solid #7e6af7; padding-left: 15px;";
-      } else if (template === "classic") {
-        templateStyle = "font-family: Georgia, serif; color: #000;";
-      }
-
       const previewElement = document.getElementById("resumePreview");
       if (previewElement) {
         previewElement.style.fontFamily = font;
+
+        // Reset templates
+        previewElement.className = "resume-preview " + template;
+
         previewElement.innerHTML = `
-          <div class="resume-header" style="${templateStyle}">
+          <div class="resume-header">
             <div class="resume-name">${name}</div>
             <div class="resume-title">${title}</div>
             <div class="resume-contact">${contact}</div>
@@ -380,38 +396,40 @@ Certified Web Developer - 2021</textarea>
       }
     }
 
-    // Download resume as PDF
+    // Download resume as PDF (white background fix)
     async function downloadResume() {
       try {
         const { jsPDF } = window.jspdf;
         const resumeElement = document.getElementById("resumePreview");
         
+        // Clone element
         const clone = resumeElement.cloneNode(true);
         clone.style.width = "210mm";
         clone.style.padding = "25mm";
         clone.style.fontSize = "12pt";
         clone.style.lineHeight = "1.4";
+        clone.style.background = "#ffffff"; // Force white background
+        
+        // Temporarily add clone
         clone.style.position = "absolute";
         clone.style.left = "-9999px";
         document.body.appendChild(clone);
         
         const pdf = new jsPDF("p", "mm", "a4");
         const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
         
         const canvas = await html2canvas(clone, {
           scale: 2,
           useCORS: true,
-          logging: false
+          backgroundColor: "#ffffff"
         });
         
         document.body.removeChild(clone);
         
         const imgData = canvas.toDataURL("image/png");
-        const imgWidth = pdfWidth;
         const imgHeight = (canvas.height * pdfWidth) / canvas.width;
         
-        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
         pdf.save("professional-resume.pdf");
       } catch (error) {
         console.error("Error generating PDF:", error);
@@ -419,6 +437,7 @@ Certified Web Developer - 2021</textarea>
       }
     }
 
+    // Initialize preview on load
     window.onload = function() {
       updatePreview();
     };
