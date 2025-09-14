@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Professional Resume Builder</title>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264" crossorigin="anonymous"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -17,13 +19,9 @@
       color: #fff;
       padding: 20px;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
     
     .container {
-      width: 100%;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -41,6 +39,11 @@
       font-size: 2.5rem;
       margin-bottom: 10px;
       color: #39ffd9;
+    }
+    
+    .tagline {
+      color: #a0a0c0;
+      font-size: 1.1rem;
     }
     
     .builder-container {
@@ -128,6 +131,40 @@
       margin-right: 8px;
     }
     
+    .template-selector {
+      background: rgba(40, 40, 70, 0.6);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .template-options {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    
+    .template-btn {
+      background: rgba(30, 30, 60, 0.8);
+      border: 1px solid #555;
+      color: #ddd;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .template-btn:hover {
+      background: rgba(60, 60, 100, 0.8);
+    }
+    
+    .template-btn.active {
+      background: linear-gradient(90deg, #7e6af7 0%, #39ffd9 100%);
+      color: #021023;
+      border-color: #7e6af7;
+    }
+    
     .resume-preview {
       background: white;
       color: #333;
@@ -136,6 +173,7 @@
       flex: 1;
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
       overflow: auto;
+      min-height: 500px;
     }
     
     .resume-header {
@@ -200,32 +238,70 @@
       width: 100%;
     }
     
-    .instructions {
-      background: rgba(255, 255, 255, 0.05);
+    .pro-tip {
+      background: rgba(57, 255, 217, 0.1);
       padding: 15px;
       border-radius: 8px;
       margin-top: 20px;
       font-size: 14px;
+      border-left: 4px solid #39ffd9;
     }
     
-    .instructions h3 {
+    .pro-tip h3 {
       color: #39ffd9;
       margin-bottom: 10px;
+      display: flex;
+      align-items: center;
     }
     
-    /* Template Styles */
-    .template-modern { font-family: 'Segoe UI', sans-serif; }
-    .template-minimal { font-family: 'Arial', sans-serif; }
-    .template-classic { font-family: 'Georgia', serif; color: #222; }
-    .template-creative { font-family: 'Verdana', sans-serif; color: #2c3e50; }
+    .pro-tip h3 i {
+      margin-right: 8px;
+    }
+    
+    .pro-tip ul {
+      margin-left: 20px;
+      margin-top: 8px;
+    }
+    
+    .pro-tip li {
+      margin-bottom: 5px;
+    }
+    
+    .ad-container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    
+    .ad-label {
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 5px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <h1>Professional Resume Builder</h1>
-      <p>Create a polished resume that looks great on any device</p>
+      <p class="tagline">Create a standout resume that gets you noticed by employers</p>
     </header>
+    
+    <!-- AdSense Ad Unit -->
+    <div class="ad-container">
+      <div class="ad-label">Advertisement</div>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6104943961690264"
+           data-ad-slot="1291978205"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
     
     <div class="builder-container">
       <div class="editor-panel">
@@ -243,54 +319,62 @@
         
         <div class="form-group">
           <label for="contactInfo">Contact Information</label>
-          <input type="text" id="contactInfo" value="alex@example.com | (123) 456-7890">
+          <input type="text" id="contactInfo" value="alex@example.com | (123) 456-7890 | linkedin.com/in/alexjohnson">
         </div>
         
         <div class="form-group">
           <label for="fontSelect">Choose Font</label>
-          <select id="fontSelect">
-            <option value="'Segoe UI', sans-serif">Segoe UI (Modern)</option>
-            <option value="'Georgia', serif">Georgia (Professional)</option>
-            <option value="'Arial', sans-serif">Arial (Clean)</option>
-            <option value="'Verdana', sans-serif">Verdana (Readable)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="templateSelect">Choose Template</label>
-          <select id="templateSelect">
-            <option value="template-modern">Modern</option>
-            <option value="template-minimal">Minimal</option>
-            <option value="template-classic">Classic</option>
-            <option value="template-creative">Creative</option>
+          <select id="fontSelect" onchange="updatePreview()">
+            <option value="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Segoe UI (Modern)</option>
+            <option value="Georgia, serif">Georgia (Professional)</option>
+            <option value="Arial, sans-serif">Arial (Clean)</option>
+            <option value="Verdana, sans-serif">Verdana (Readable)</option>
+            <option value="'Times New Roman', serif">Times New Roman (Classic)</option>
           </select>
         </div>
         
         <div class="form-group">
           <label for="summary">Professional Summary</label>
-          <textarea id="summary">Experienced frontend developer with 5+ years building responsive web apps.</textarea>
+          <textarea id="summary">Experienced frontend developer with 5+ years building responsive web apps. Specialized in React, JavaScript, and modern web technologies. Proven track record of delivering high-quality solutions that improve user experience and business outcomes.</textarea>
         </div>
         
         <div class="form-group">
           <label for="experience">Work Experience</label>
           <textarea id="experience">Senior Developer at TechCorp (2020–Present)
-- Led a team of 5 engineers
-- Improved site performance by 40%
-- Implemented React best practices</textarea>
+- Led a team of 5 engineers in developing responsive web applications
+- Improved site performance by 40% through code optimization and caching strategies
+- Implemented React best practices across all projects reducing bugs by 25%
+- Collaborated with UX designers to create intuitive user interfaces
+</textarea>
         </div>
         
         <div class="form-group">
           <label for="skills">Skills</label>
-          <textarea id="skills">JavaScript
-React
-CSS
-Node.js</textarea>
+          <textarea id="skills">JavaScript (ES6+)
+React & Redux
+HTML5 & CSS3
+Node.js
+Responsive Web Design
+Git & GitHub
+</textarea>
         </div>
         
         <div class="form-group">
           <label for="education">Education</label>
-          <textarea id="education">B.Sc. Computer Science - Tech University
-Certified Web Developer - 2021</textarea>
+          <textarea id="education">B.Sc. Computer Science - Tech University (2014-2018)
+- Graduated with Honors (GPA: 3.8/4.0)
+- Relevant Courses: Data Structures, Algorithms, Web Development
+- Senior Project: Developed a campus navigation app using React Native
+</textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="projects">Projects & Achievements</label>
+          <textarea id="projects">E-Commerce Platform (2022)
+- Led development of a full-stack e-commerce solution serving 10,000+ users
+- Implemented payment processing with Stripe API
+- Reduced cart abandonment by 15% through UX improvements
+</textarea>
         </div>
         
         <button onclick="updatePreview()">
@@ -300,7 +384,18 @@ Certified Web Developer - 2021</textarea>
       
       <div class="preview-panel">
         <h2>Resume Preview</h2>
-        <div id="resumePreview" class="resume-preview template-modern">
+        
+        <div class="template-selector">
+          <label>Choose a Template Style:</label>
+          <div class="template-options">
+            <button class="template-btn active" onclick="changeTemplate('professional')">Professional</button>
+            <button class="template-btn" onclick="changeTemplate('modern')">Modern</button>
+            <button class="template-btn" onclick="changeTemplate('creative')">Creative</button>
+            <button class="template-btn" onclick="changeTemplate('minimalist')">Minimalist</button>
+          </div>
+        </div>
+        
+        <div id="resumePreview" class="resume-preview">
           <!-- Preview will be generated here -->
         </div>
         
@@ -308,28 +403,34 @@ Certified Web Developer - 2021</textarea>
           <i class="fas fa-download"></i> Download Resume as PDF
         </button>
         
-        <div class="instructions">
-          <h3>Pro Tip</h3>
-          <p>FILL AS MUCH YOU CAN — THIS WILL MAKE YOUR RESUME IMPRESSIVE.</p>
+        <div class="pro-tip">
+          <h3><i class="fas fa-lightbulb"></i> Pro Tip: Fill As Much As You Can!</h3>
+          <p>Complete all sections with detailed information to make your resume stand out. Employers appreciate:</p>
+          <ul>
+            <li>Quantifiable achievements (e.g., "Improved performance by 40%")</li>
+            <li>Specific technologies and skills</li>
+            <li>Professional accomplishments and projects</li>
+            <li>Education and certifications</li>
+            <li>Clear contact information</li>
+          </ul>
         </div>
-
-        <!-- Google AdSense -->
-        <ins class="adsbygoogle"
-            style="display:block; margin-top:20px;"
-            data-ad-client="ca-pub-6104943961690264"
-            data-ad-slot="7551669764"
-            data-ad-format="auto"
-            data-full-width-responsive="true"></ins>
       </div>
     </div>
+    
+    <!-- AdSense Ad Unit -->
+    <div class="ad-container">
+      <div class="ad-label">Advertisement</div>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6104943961690264"
+           data-ad-slot="6987744742"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
   </div>
-
-  <!-- AdSense Script -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264"
-     crossorigin="anonymous"></script>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
 
   <!-- Include Font Awesome for icons -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
@@ -339,6 +440,9 @@ Certified Web Developer - 2021</textarea>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <script>
+    let currentTemplate = 'professional';
+    let currentFont = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+    
     // Format text as list items
     function formatAsList(text) {
       const lines = text.split("\n").filter(line => line.trim() !== "");
@@ -356,16 +460,16 @@ Certified Web Developer - 2021</textarea>
       const experience = document.getElementById("experience").value;
       const skills = document.getElementById("skills").value;
       const education = document.getElementById("education").value;
-      const font = document.getElementById("fontSelect").value;
-      const template = document.getElementById("templateSelect").value;
+      const projects = document.getElementById("projects").value;
+      currentFont = document.getElementById("fontSelect").value;
 
       const previewElement = document.getElementById("resumePreview");
       if (previewElement) {
-        previewElement.style.fontFamily = font;
-
-        // Reset templates
-        previewElement.className = "resume-preview " + template;
-
+        previewElement.style.fontFamily = currentFont;
+        
+        // Apply template-specific styles
+        applyTemplateStyles(previewElement, currentTemplate);
+        
         previewElement.innerHTML = `
           <div class="resume-header">
             <div class="resume-name">${name}</div>
@@ -374,12 +478,12 @@ Certified Web Developer - 2021</textarea>
           </div>
           
           <div class="resume-section">
-            <div class="section-title">Summary</div>
+            <div class="section-title">Professional Summary</div>
             ${formatAsList(summary)}
           </div>
           
           <div class="resume-section">
-            <div class="section-title">Experience</div>
+            <div class="section-title">Work Experience</div>
             ${formatAsList(experience)}
           </div>
           
@@ -392,44 +496,105 @@ Certified Web Developer - 2021</textarea>
             <div class="section-title">Education</div>
             ${formatAsList(education)}
           </div>
+          
+          <div class="resume-section">
+            <div class="section-title">Projects & Achievements</div>
+            ${formatAsList(projects)}
+          </div>
         `;
       }
     }
 
-    // Download resume as PDF (white background fix)
+    // Change template
+    function changeTemplate(template) {
+      currentTemplate = template;
+      
+      // Update active button
+      document.querySelectorAll('.template-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      updatePreview();
+    }
+
+    // Apply template-specific styles
+    function applyTemplateStyles(element, template) {
+      // Reset styles
+      element.className = 'resume-preview';
+      
+      switch(template) {
+        case 'professional':
+          element.style.borderLeft = '4px solid #7e6af7';
+          element.style.background = '#fff';
+          break;
+        case 'modern':
+          element.style.borderTop = '4px solid #39ffd9';
+          element.style.background = '#fafafa';
+          break;
+        case 'creative':
+          element.style.background = 'linear-gradient(white, #f8f8ff)';
+          element.style.border = '1px solid #e0e0ff';
+          break;
+        case 'minimalist':
+          element.style.background = '#fff';
+          element.style.padding = '25px';
+          element.style.border = '1px solid #eee';
+          break;
+      }
+    }
+
+    // Download resume as PDF
     async function downloadResume() {
       try {
         const { jsPDF } = window.jspdf;
         const resumeElement = document.getElementById("resumePreview");
         
-        // Clone element
+        // Create a clone of the element to avoid modifying the original
         const clone = resumeElement.cloneNode(true);
+        
+        // Apply print-specific styles to the clone
         clone.style.width = "210mm";
         clone.style.padding = "25mm";
         clone.style.fontSize = "12pt";
         clone.style.lineHeight = "1.4";
-        clone.style.background = "#ffffff"; // Force white background
+        clone.style.fontFamily = currentFont;
         
-        // Temporarily add clone
+        // Make sure background colors are preserved
+        clone.style.backgroundColor = getComputedStyle(resumeElement).backgroundColor;
+        clone.style.color = getComputedStyle(resumeElement).color;
+        
+        // Temporarily append to document to calculate dimensions
         clone.style.position = "absolute";
         clone.style.left = "-9999px";
         document.body.appendChild(clone);
         
+        // Create PDF
         const pdf = new jsPDF("p", "mm", "a4");
         const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
         
+        // Generate canvas from clone
         const canvas = await html2canvas(clone, {
-          scale: 2,
+          scale: 2, // Higher scale for better quality
           useCORS: true,
-          backgroundColor: "#ffffff"
+          logging: false,
+          backgroundColor: getComputedStyle(resumeElement).backgroundColor
         });
         
+        // Remove the clone from document
         document.body.removeChild(clone);
         
         const imgData = canvas.toDataURL("image/png");
+        
+        // Calculate dimensions to fit the page
+        const imgWidth = pdfWidth;
         const imgHeight = (canvas.height * pdfWidth) / canvas.width;
         
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+        // Add image to PDF
+        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+        
+        // Save PDF
         pdf.save("professional-resume.pdf");
       } catch (error) {
         console.error("Error generating PDF:", error);
@@ -437,7 +602,7 @@ Certified Web Developer - 2021</textarea>
       }
     }
 
-    // Initialize preview on load
+    // Initialize the preview when page loads
     window.onload = function() {
       updatePreview();
     };
