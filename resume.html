@@ -200,15 +200,16 @@
       width: 100%;
     }
     
-    .instructions {
+    .pro-tip {
       background: rgba(255, 255, 255, 0.05);
       padding: 15px;
       border-radius: 8px;
       margin-top: 20px;
       font-size: 14px;
+      text-align: center;
     }
     
-    .instructions h3 {
+    .pro-tip h3 {
       color: #39ffd9;
       margin-bottom: 10px;
     }
@@ -284,6 +285,17 @@ Certified Web Developer - 2021</textarea>
       
       <div class="preview-panel">
         <h2>Resume Preview</h2>
+
+        <!-- Template Selector -->
+        <div class="form-group">
+          <label for="templateSelect">Choose Template</label>
+          <select id="templateSelect" onchange="updatePreview()">
+            <option value="default">Default Template</option>
+            <option value="modern">Modern Template</option>
+            <option value="classic">Classic Template</option>
+          </select>
+        </div>
+
         <div id="resumePreview" class="resume-preview">
           <!-- Preview will be generated here -->
         </div>
@@ -292,15 +304,9 @@ Certified Web Developer - 2021</textarea>
           <i class="fas fa-download"></i> Download Resume as PDF
         </button>
         
-       <div class="instructions">
-          <h3>Pro Tip for Better PDF Results</h3>
-          <p>WRITE AS MUCH YOU CAN THIS WILL MAKE YOUR RESUME IMPRESSIVE:</p>
-          <ul>
-            <li>Layout: Portrait</li>
-            <li>Paper size: A4 or Letter</li>
-            <li>Margins: Default or None</li>
-            <li>Options: Background graphics enabled</li>
-          </ul>
+        <div class="pro-tip">
+          <h3>Pro Tip</h3>
+          <p>FILL AS MUCH YOU CAN — THIS WILL MAKE YOUR RESUME IMPRESSIVE ✅</p>
         </div>
       </div>
     </div>
@@ -332,12 +338,20 @@ Certified Web Developer - 2021</textarea>
       const skills = document.getElementById("skills").value;
       const education = document.getElementById("education").value;
       const font = document.getElementById("fontSelect").value;
+      const template = document.getElementById("templateSelect").value;
+
+      let templateStyle = "";
+      if (template === "modern") {
+        templateStyle = "border-left: 5px solid #7e6af7; padding-left: 15px;";
+      } else if (template === "classic") {
+        templateStyle = "font-family: Georgia, serif; color: #000;";
+      }
 
       const previewElement = document.getElementById("resumePreview");
       if (previewElement) {
         previewElement.style.fontFamily = font;
         previewElement.innerHTML = `
-          <div class="resume-header">
+          <div class="resume-header" style="${templateStyle}">
             <div class="resume-name">${name}</div>
             <div class="resume-title">${title}</div>
             <div class="resume-contact">${contact}</div>
@@ -372,45 +386,32 @@ Certified Web Developer - 2021</textarea>
         const { jsPDF } = window.jspdf;
         const resumeElement = document.getElementById("resumePreview");
         
-        // Create a clone of the element to avoid modifying the original
         const clone = resumeElement.cloneNode(true);
-        
-        // Apply print-specific styles to the clone
         clone.style.width = "210mm";
         clone.style.padding = "25mm";
         clone.style.fontSize = "12pt";
         clone.style.lineHeight = "1.4";
-        
-        // Temporarily append to document to calculate dimensions
         clone.style.position = "absolute";
         clone.style.left = "-9999px";
         document.body.appendChild(clone);
         
-        // Create PDF
         const pdf = new jsPDF("p", "mm", "a4");
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
         
-        // Generate canvas from clone
         const canvas = await html2canvas(clone, {
-          scale: 2, // Higher scale for better quality
+          scale: 2,
           useCORS: true,
           logging: false
         });
         
-        // Remove the clone from document
         document.body.removeChild(clone);
         
         const imgData = canvas.toDataURL("image/png");
-        
-        // Calculate dimensions to fit the page
         const imgWidth = pdfWidth;
         const imgHeight = (canvas.height * pdfWidth) / canvas.width;
         
-        // Add image to PDF
         pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-        
-        // Save PDF
         pdf.save("professional-resume.pdf");
       } catch (error) {
         console.error("Error generating PDF:", error);
@@ -418,7 +419,6 @@ Certified Web Developer - 2021</textarea>
       }
     }
 
-    // Initialize the preview when page loads
     window.onload = function() {
       updatePreview();
     };
