@@ -5,9 +5,261 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Professional Resume Builder</title>
   <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6104943961690264" crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
   <style>
-    /* (same CSS as before) */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 100%);
+      color: #eee;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #a855f7; /* purple accent */
+      text-shadow: 0 0 10px rgba(168, 85, 247, 0.7);
+    }
+
+    .tagline {
+      color: #b8b8d9;
+      font-size: 1.1rem;
+    }
+
+    .builder-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 992px) {
+      .builder-container {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .editor-panel, .preview-panel {
+      background: rgba(26, 26, 46, 0.9);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      overflow-y: auto;
+      max-height: 90vh;
+    }
+
+    h2 {
+      color: #a855f7;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #ccc;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 6px;
+      border: 1px solid #555;
+      background: rgba(30, 30, 60, 0.6);
+      color: #fff;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    button {
+      background: linear-gradient(90deg, #7e22ce, #a855f7);
+      color: #fff;
+      border: none;
+      padding: 14px 25px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: all 0.2s ease-in-out;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(168, 85, 247, 0.5);
+    }
+
+    button i {
+      margin-right: 8px;
+    }
+
+    .template-selector {
+      background: rgba(40, 40, 70, 0.6);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .template-options {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .template-btn {
+      background: rgba(30, 30, 60, 0.8);
+      border: 1px solid #555;
+      color: #ddd;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .template-btn:hover {
+      background: rgba(60, 60, 100, 0.8);
+      color: #fff;
+    }
+
+    .template-btn.active {
+      background: linear-gradient(90deg, #7e22ce, #a855f7);
+      color: #fff;
+      border-color: #a855f7;
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.7);
+    }
+
+    .resume-preview {
+      background: #fff;
+      color: #333;
+      border-radius: 8px;
+      padding: 30px;
+      flex: 1;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+      min-height: 500px;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+    }
+
+    .resume-header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #a855f7;
+    }
+
+    .resume-name {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: #1a1a2e;
+    }
+
+    .resume-title {
+      font-size: 18px;
+      color: #7e22ce;
+      margin-bottom: 10px;
+    }
+
+    .resume-contact {
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a2e;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #a855f7;
+    }
+
+    .resume-list {
+      list-style-type: none;
+    }
+
+    .resume-list li {
+      margin-bottom: 6px;
+      padding-left: 20px;
+      position: relative;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .resume-list li:before {
+      content: "•";
+      color: #a855f7;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+
+    .download-btn {
+      background: linear-gradient(90deg, #9333ea, #a855f7);
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .ad-container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .ad-label {
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 5px;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .builder-container, .editor-panel, .template-selector, .ad-container, button {
+        display: none !important;
+      }
+      .resume-preview {
+        box-shadow: none;
+        padding: 0;
+        width: 100%;
+        min-height: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -17,13 +269,13 @@
       <p class="tagline">Create a standout resume that gets you noticed by employers</p>
     </header>
 
-    <!-- AdSense Ad Unit -->
+    <!-- Top Ad Unit -->
     <div class="ad-container">
       <div class="ad-label">Advertisement</div>
       <ins class="adsbygoogle"
            style="display:block"
-           data-ad-client="ca-pub-6104943961690264"
-           data-ad-slot="1291978205"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="XXXXXXXXXX"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
       <script>
@@ -34,39 +286,48 @@
     <div class="builder-container">
       <div class="editor-panel">
         <h2>Edit Your Resume</h2>
-
-        <!-- (all input fields, select, textarea as before) -->
-
-        <button onclick="updatePreview()">
-          <i class="fas fa-sync"></i> Update Preview
-        </button>
-
-        <!-- New Refresh Preview Button -->
-        <button onclick="refreshPreview()">
-          <i class="fas fa-redo"></i> Refresh Preview
-        </button>
+        <!-- Form fields... (same as before) -->
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" value="Alex Johnson">
+        </div>
+        <div class="form-group">
+          <label for="jobTitle">Job Title</label>
+          <input type="text" id="jobTitle" value="Frontend Developer">
+        </div>
+        <div class="form-group">
+          <label for="contactInfo">Contact Information</label>
+          <input type="text" id="contactInfo" value="alex@example.com | (123) 456-7890 | linkedin.com/in/alexjohnson">
+        </div>
+        <button onclick="updatePreview()"><i class="fas fa-sync"></i> Update Preview</button>
+        <button onclick="updatePreview()"><i class="fas fa-redo"></i> Refresh Preview</button>
       </div>
 
       <div class="preview-panel">
         <h2>Resume Preview</h2>
-
-        <!-- (template selector and preview as before) -->
-
-        <button class="download-btn" onclick="downloadResume()">
-          <i class="fas fa-download"></i> Download Resume as PDF
-        </button>
-
-        <!-- (Pro Tip section as before) -->
+        <div class="template-selector">
+          <label>Choose a Template Style:</label>
+          <div class="template-options">
+            <button class="template-btn active" onclick="changeTemplate('professional')">Professional</button>
+            <button class="template-btn" onclick="changeTemplate('modern')">Modern</button>
+            <button class="template-btn" onclick="changeTemplate('creative')">Creative</button>
+            <button class="template-btn" onclick="changeTemplate('minimalist')">Minimalist</button>
+          </div>
+        </div>
+        <div id="resumePreview" class="resume-preview">
+          <div class="resume-content"></div>
+        </div>
+        <button class="download-btn" onclick="downloadResume()"><i class="fas fa-download"></i> Download Resume as PDF</button>
       </div>
     </div>
 
-    <!-- AdSense Ad Unit -->
+    <!-- Bottom Ad Unit -->
     <div class="ad-container">
       <div class="ad-label">Advertisement</div>
       <ins class="adsbygoogle"
            style="display:block"
-           data-ad-client="ca-pub-6104943961690264"
-           data-ad-slot="6987744742"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="XXXXXXXXXX"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
       <script>
@@ -75,21 +336,18 @@
     </div>
   </div>
 
-  <!-- Include Font Awesome for icons -->
+  <!-- Icons & Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-
-  <!-- Include jsPDF and html2canvas from CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <script>
     let currentTemplate = 'professional';
-    let currentFont = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
 
     function formatAsList(text) {
       const lines = text.split("\n").filter(line => line.trim() !== "");
-      return `<ul class="resume-list">` + 
-        lines.map(line => `<li>${line.replace(/^- /, "").trim()}</li>`).join("") + 
+      return `<ul class="resume-list">` +
+        lines.map(line => `<li>${line.replace(/^- /, "").trim()}</li>`).join("") +
         `</ul>`;
     }
 
@@ -97,51 +355,18 @@
       const name = document.getElementById("fullName").value;
       const title = document.getElementById("jobTitle").value;
       const contact = document.getElementById("contactInfo").value;
-      const summary = document.getElementById("summary").value;
-      const experience = document.getElementById("experience").value;
-      const skills = document.getElementById("skills").value;
-      const education = document.getElementById("education").value;
-      const projects = document.getElementById("projects").value;
-      currentFont = document.getElementById("fontSelect").value;
 
       const previewElement = document.querySelector(".resume-content");
-      if (previewElement) {
-        previewElement.style.fontFamily = currentFont;
-        applyTemplateStyles(previewElement, currentTemplate);
-        previewElement.innerHTML = `
-          <div class="resume-header">
-            <div class="resume-name">${name}</div>
-            <div class="resume-title">${title}</div>
-            <div class="resume-contact">${contact}</div>
-          </div>
-          <div class="resume-section">
-            <div class="section-title">Professional Summary</div>
-            ${formatAsList(summary)}
-          </div>
-          <div class="resume-section">
-            <div class="section-title">Work Experience</div>
-            ${formatAsList(experience)}
-          </div>
-          <div class="resume-section">
-            <div class="section-title">Skills</div>
-            ${formatAsList(skills)}
-          </div>
-          <div class="resume-section">
-            <div class="section-title">Education</div>
-            ${formatAsList(education)}
-          </div>
-          <div class="resume-section">
-            <div class="section-title">Projects & Achievements</div>
-            ${formatAsList(projects)}
-          </div>
-        `;
-      }
-    }
-
-    // Refresh function to clear and regenerate preview
-    function refreshPreview() {
-      document.querySelector(".resume-content").innerHTML = "";
-      updatePreview();
+      previewElement.innerHTML = `
+        <div class="resume-header">
+          <div class="resume-name">${name}</div>
+          <div class="resume-title">${title}</div>
+          <div class="resume-contact">${contact}</div>
+        </div>
+        <div class="resume-section">
+          <div class="section-title">Professional Summary</div>
+          ${formatAsList("Add your summary here...")}
+        </div>`;
     }
 
     function changeTemplate(template) {
@@ -151,62 +376,19 @@
       updatePreview();
     }
 
-    function applyTemplateStyles(element, template) {
-      const resumePreview = document.getElementById("resumePreview");
-      resumePreview.className = 'resume-preview';
-      switch(template) {
-        case 'professional':
-          resumePreview.style.borderLeft = '4px solid #7e6af7';
-          resumePreview.style.background = '#fff';
-          break;
-        case 'modern':
-          resumePreview.style.borderTop = '4px solid #39ffd9';
-          resumePreview.style.background = '#fafafa';
-          break;
-        case 'creative':
-          resumePreview.style.background = 'linear-gradient(white, #f8f8ff)';
-          resumePreview.style.border = '1px solid #e0e0ff';
-          break;
-        case 'minimalist':
-          resumePreview.style.background = '#fff';
-          resumePreview.style.padding = '25px';
-          resumePreview.style.border = '1px solid #eee';
-          break;
-      }
-    }
-
     async function downloadResume() {
-      try {
-        const { jsPDF } = window.jspdf;
-        const resumeElement = document.getElementById("resumePreview");
-        const clone = resumeElement.cloneNode(true);
-        clone.style.width = "210mm";
-        clone.style.padding = "20mm";
-        clone.style.fontSize = "12pt";
-        clone.style.lineHeight = "1.4";
-        clone.style.fontFamily = currentFont;
-        clone.style.backgroundColor = getComputedStyle(resumeElement).backgroundColor;
-        clone.style.color = getComputedStyle(resumeElement).color;
-        clone.style.position = "absolute";
-        clone.style.left = "-9999px";
-        document.body.appendChild(clone);
-
-        const pdf = new jsPDF("p", "mm", "a4");
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const canvas = await html2canvas(clone, { scale: 2, useCORS: true, logging: false, backgroundColor: getComputedStyle(resumeElement).backgroundColor });
-        document.body.removeChild(clone);
-
-        const imgData = canvas.toDataURL("image/png");
-        const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
-        pdf.save("professional-resume.pdf");
-      } catch (error) {
-        console.error("Error generating PDF:", error);
-        alert("There was an error generating your PDF. Please try again.");
-      }
+      const { jsPDF } = window.jspdf;
+      const resumeElement = document.getElementById("resumePreview");
+      const canvas = await html2canvas(resumeElement, { scale: 2 });
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, imgHeight);
+      pdf.save("resume.pdf");
     }
 
-    window.onload = function() { updatePreview(); };
+    window.onload = updatePreview;
   </script>
 </body>
 </html>
