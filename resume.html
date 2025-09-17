@@ -629,51 +629,42 @@ Tech Conference Speaker (2021)
         const { jsPDF } = window.jspdf;
         const resumeElement = document.getElementById("resumePreview");
         
-        // Create a clone of the element to avoid modifying the original
-        const clone = resumeElement.cloneNode(true);
+        // Generate canvas from the resume element
+        const canvas = await html2canvas(resumeElement, {
+          scale: 1.5, // Adjusted scale to prevent content overflow. You can experiment with this value.
+          useCORS: true,
+          logging: false,
+          backgroundColor: getComputedStyle(resumeElement).backgroundColor,
+          windowWidth: resumeElement.scrollWidth,
+          windowHeight: resumeElement.scrollHeight
+        });
         
-        // Apply print-specific styles to the clone
-        clone.style.width = "210mm";
-        clone.style.padding = "20mm";
-        clone.style.fontSize = "12pt";
-        clone.style.lineHeight = "1.4";
-        clone.style.fontFamily = currentFont;
+        const imgData = canvas.toDataURL("image/png");
         
-        // Make sure background colors are preserved
-        clone.style.backgroundColor = getComputedStyle(resumeElement).backgroundColor;
-        clone.style.color = getComputedStyle(resumeElement).color;
-        
-        // Temporarily append to document to calculate dimensions
-        clone.style.position = "absolute";
-        clone.style.left = "-9999px";
-        document.body.appendChild(clone);
-        
-        // Create PDF
+        // Create a new PDF document with A4 dimensions
         const pdf = new jsPDF("p", "mm", "a4");
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
         
-        // Generate canvas from clone
-        const canvas = await html2canvas(clone, {
-          scale: 2, // Higher scale for better quality
-          useCORS: true,
-          logging: false,
-          backgroundColor: getComputedStyle(resumeElement).backgroundColor
-        });
-        
-        // Remove the clone from document
-        document.body.removeChild(clone);
-        
-        const imgData = canvas.toDataURL("image/png");
-        
-        // Calculate dimensions to fit the page
+        // Calculate the dimensions to fit the image on the PDF page
         const imgWidth = pdfWidth;
         const imgHeight = (canvas.height * pdfWidth) / canvas.width;
         
-        // Add image to PDF
-        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+        // Add the image to the PDF
+        let position = 0;
+        let heightLeft = imgHeight;
         
-        // Save PDF
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pdfHeight;
+        
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+          heightLeft -= pdfHeight;
+        }
+        
+        // Save the PDF
         pdf.save("professional-resume.pdf");
       } catch (error) {
         console.error("Error generating PDF:", error);
